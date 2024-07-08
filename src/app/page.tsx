@@ -76,7 +76,7 @@ export default function Home() {
       <form
         ref={formRef}
         onSubmit={translate}
-        className="relative w-[500px] min-h-[300px]" // min-h overrides height's value when height < 300px
+        className="relative w-[500px] h-[300px] min-h-[300px]" // min-h overrides height's value when height < 300px
       >
         <textarea
           ref={textAreaRef}
