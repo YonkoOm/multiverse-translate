@@ -1,6 +1,10 @@
 export async function POST(req: Request) {
-  async function deepLWebTranslate(text: string, from: string, to: string) {
-    const url = "https://www2.deepl.com/jsonrpc";
+  const deepLWebTranslate = async (
+    text: string,
+    from: string,
+    to: string,
+  ): Promise<string[]> => {
+    const API_TRANSLATE = "https://www2.deepl.com/jsonrpc";
     const srcLang = languageCodeForLanguage(from);
     const targetLang = languageCodeForLanguage(to);
 
@@ -39,20 +43,23 @@ export async function POST(req: Request) {
     };
 
     try {
-      const res = await fetch(url, reqOptions);
+      const res = await fetch(API_TRANSLATE, reqOptions);
       if (!res.ok) {
-        throw new Error("Couldn't Translate :(");
+        throw new Error(
+          `Failed to Translate: ${res.status} (${res.statusText})`,
+        );
       }
 
       const translationData = await res.json();
-      const translatedText = translationData.result.texts[0].text.trim();
-      const results = translatedText.split("\n");
+      const translatedText: string =
+        translationData.result.texts[0].text.trim();
+      const results: string[] = translatedText.split("\n");
 
       return results;
-    } catch (error) {
-      console.error("Error fetching translation:", error);
+    } catch (e) {
+      throw e;
     }
-  }
+  };
 
   function languageCodeForLanguage(language: string) {
     const languageCodes: { [key: string]: string } = {
@@ -91,15 +98,15 @@ export async function POST(req: Request) {
     return languageCodes[language] || null;
   }
 
-  function getRandomNumber() {
+  const getRandomNumber = () => {
     return Math.floor(Math.random() * 89999) + 100000;
-  }
+  };
 
-  function getICount(text: string) {
+  const getICount = (text: string) => {
     return (text.match(/i/g) || []).length;
-  }
+  };
 
-  function getTimeStampWithIcount(iCount: number) {
+  const getTimeStampWithIcount = (iCount: number) => {
     const ts = Date.now();
     if (iCount !== 0) {
       iCount += 1;
@@ -107,10 +114,14 @@ export async function POST(req: Request) {
     } else {
       return ts;
     }
-  }
+  };
 
   const { text, fromLang, toLang } = await req.json();
-  const translatedText = await deepLWebTranslate(text, fromLang, toLang);
-
-  return Response.json({ translatedText });
+  try {
+    const translatedText = await deepLWebTranslate(text, fromLang, toLang);
+    return Response.json({ translatedText: translatedText[0] });
+  } catch (e) {
+    console.error((e as Error).message);
+    return Response.json({ error: (e as Error).message }, { status: 500 });
+  }
 }

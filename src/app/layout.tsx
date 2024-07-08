@@ -5,7 +5,7 @@ import { mplus } from "./fonts";
 export const metadata: Metadata = {
   title: "Translation",
   description:
-    "Translation service that queries multiple translations services in one location",
+    "Translation service that queries multiple translations services all in one location for ease",
 };
 
 export default function RootLayout({
