@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { mplus, lato } from "./fonts";
 
 type Translator = {
   name: string;
@@ -34,11 +35,12 @@ export default function Home() {
     e.preventDefault();
     setTranslationData([]);
 
+    // TODO: add alert
     if (text.trim() === "") {
       return;
     }
 
-    apis.map(async (api) => {
+    apis.forEach(async (api) => {
       const res = await fetch(api.translator, {
         method: "POST",
         headers: {
@@ -52,18 +54,18 @@ export default function Home() {
       });
 
       if (!res.ok) {
+        const body = await res.json();
         setTranslationData((prevTranslatedData) => [
           ...prevTranslatedData,
           {
             name: api.name,
-            translation: "Translation Failed :(... Please Try Again",
+            translation: body.error,
           },
         ]);
         return;
       }
 
       const translationData: { translatedText: string } = await res.json();
-      console.log(translationData);
       setTranslationData((prevTranslatedData) => [
         ...prevTranslatedData,
         { name: api.name, translation: translationData.translatedText },
@@ -80,14 +82,14 @@ export default function Home() {
       >
         <textarea
           ref={textAreaRef}
-          placeholder="Enter Text to Translate :)"
+          placeholder="Enter text here to translate :)"
           value={text}
           onChange={(e) => setText(e.target.value)}
-          className="outline-none focus:outline-1 focus:outline-sky-500 resize-none text-black p-5 pb-32 w-full h-full text-3xl bg-[#E7DECD] rounded-xl overflow-hidden"
+          className={`outline-none focus:outline-1 focus:outline-sky-500 resize-none text-black p-5 pb-32 w-full h-full text-[28px] placeholder-slate-500 bg-[#E7DECD] rounded-xl overflow-hidden ${lato.className}`}
         />
         <button
           type="submit"
-          className="text-white font-bold absolute bottom-0 right-0 bg-[#677DB7] hover:bg-[#677DB7]/90 p-2 rounded-tl-lg rounded-br-xl"
+          className={`text-white font-bold absolute bottom-0 right-0 bg-[#677DB7] hover:bg-[#677DB7]/90 p-2 rounded-tl-lg rounded-br-xl ${mplus.className}`}
         >
           Translate
         </button>
@@ -95,10 +97,14 @@ export default function Home() {
       <div className="text-black gap-3 flex flex-col">
         {translationData.map((text, i) => (
           <div key={text.name + i} className="relative">
-            <div className="absolute font-bold text-[14px] text-white top-0 left-0 bg-[#677DB7] rounded-tl-lg rounded-br-lg p-1.5">
+            <div
+              className={`absolute text-[14px] text-white top-0 left-0 bg-[#677DB7] rounded-tl-lg rounded-br-lg p-1.5 ${mplus.className} font-medium`}
+            >
               {text.name}
             </div>
-            <div className="rounded-xl p-6 pt-10 w-[400px] min-h-[150px] bg-[#E7DECD] text-2xl flex items-center justify-center">
+            <div
+              className={`rounded-xl p-6 pt-10 w-[400px] min-h-[150px] bg-[#E7DECD] text-2xl flex items-center justify-center ${lato.className}`}
+            >
               {text.translation}
             </div>
           </div>

@@ -1,9 +1,15 @@
-import { M_PLUS_Rounded_1c } from "next/font/google";
+import { M_PLUS_Rounded_1c, Lato } from "next/font/google";
 
 const mplus = M_PLUS_Rounded_1c({
   subsets: ["latin"],
   display: "swap",
-  weight: ["400", "700"],
+  weight: ["400", "500", "700"],
 });
 
-export { mplus };
+const lato = Lato({
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400"],
+});
+
+export { mplus, lato };
