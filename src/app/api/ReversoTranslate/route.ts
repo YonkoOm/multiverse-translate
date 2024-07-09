@@ -1,9 +1,31 @@
+import { supportedLanguages } from "../_utils/ReversoSupportedLanguages";
+
 export async function POST(req: Request) {
   const USER_AGENT =
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0";
   const API_TRANSLATE = "https://api.reverso.net/translate/v1/translation";
 
   const { text, fromLang, toLang } = await req.json();
+
+  const srcLang = supportedLanguages[fromLang] || "";
+  const targetLang = supportedLanguages[toLang] || "";
+
+  if (targetLang === "" && srcLang === "") {
+    return Response.json(
+      { error: `${fromLang} and ${toLang} not suppported` },
+      { status: 400 },
+    );
+  } else if (srcLang === "") {
+    return Response.json(
+      { error: fromLang + " not suppported" },
+      { status: 400 },
+    );
+  } else if (targetLang === "") {
+    return Response.json(
+      { error: toLang + " not suppported" },
+      { status: 400 },
+    );
+  }
 
   const reqOptions: RequestInit = {
     method: "POST",
@@ -20,21 +42,28 @@ export async function POST(req: Request) {
         origin: "reversomobile",
         sentenceSplitter: false,
       },
-      from: "eng",
-      to: "kor",
+      from: srcLang,
+      to: targetLang,
     }),
   };
 
   try {
     const res = await fetch(API_TRANSLATE, reqOptions);
+
     if (!res.ok) {
-      throw new Error(`Failed to Translate: ${res.status} (${res.statusText})`);
+      throw new Error(
+        `Failed to Translate with Status Code: ${res.status} (${res.statusText})`,
+      );
     }
 
     const translatedData = await res.json();
+
     return Response.json({ translatedText: translatedData.translation[0] });
   } catch (e) {
     console.error((e as Error).message);
-    return Response.json({ error: (e as Error).message }, { status: 500 });
+    return Response.json(
+      { error: "translation failed 😭... try again!" },
+      { status: 500 },
+    );
   }
 }

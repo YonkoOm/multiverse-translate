@@ -1,6 +1,8 @@
+import { supportedLanguages } from "../_utils/BingSupportedLanguages";
+
 type TokenInfo = {
   token: string;
-  tokenExpiresAt: number;
+  expirationTime: number;
 };
 
 let globalToken: TokenInfo;
@@ -28,60 +30,75 @@ export async function POST(req: Request) {
 
       return {
         token: authJWT,
-        // valid in 10 minutes
-        tokenExpiresAt: jwtPayload.exp * 1e3,
+        expirationTime: jwtPayload.exp * 1e3,
       };
     } catch (e) {
       throw new Error("Failed to fetch auth token\n" + (e as Error).message);
     }
   };
 
-  // consider the token as expired if the rest time is less than 1 minute
+  // token expired if expiration times is in less than a minute
   const isTokenExpired = (token: TokenInfo) =>
-    (token.tokenExpiresAt || 0) - Date.now() < 6e4;
+    (token.expirationTime || 0) - Date.now() < 6e4;
 
-  if (!globalToken || isTokenExpired(globalToken)) {
-    try {
-      globalToken = await fetchToken();
-    } catch (e) {
-      console.error((e as Error).message);
-      return Response.json({ error: (e as Error).message }, { status: 500 });
-    }
-  }
   const { text, fromLang, toLang } = await req.json();
 
-  if (!text || !text.length) {
-    return;
+  const srcLang = supportedLanguages[fromLang] || "";
+  const targetLang = supportedLanguages[toLang] || "";
+
+  if (targetLang === "" && srcLang === "") {
+    return Response.json(
+      { error: `${fromLang} and ${toLang} not suppported` },
+      { status: 400 },
+    );
+  } else if (srcLang === "") {
+    return Response.json(
+      { error: fromLang + " not suppported" },
+      { status: 400 },
+    );
+  } else if (targetLang === "") {
+    return Response.json(
+      { error: toLang + " not suppported" },
+      { status: 400 },
+    );
   }
 
-  const reqOptions = {
-    method: "POST",
-    headers: {
-      "User-Agent": USER_AGENT,
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + globalToken.token,
-    },
-    body: JSON.stringify([{ Text: text }]),
-  };
-
   try {
+    if (!globalToken || isTokenExpired(globalToken)) {
+      globalToken = await fetchToken();
+    }
+
+    const reqOptions: RequestInit = {
+      method: "POST",
+      headers: {
+        "User-Agent": USER_AGENT,
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + globalToken.token,
+      },
+      body: JSON.stringify([{ Text: text }]),
+    };
+
     const res = await fetch(
-      `${API_TRANSLATE}&from=${fromLang.toLowerCase()}&to=${toLang.toLowerCase()}`,
+      `${API_TRANSLATE}&from=${srcLang}&to=${targetLang}`,
       reqOptions,
     );
 
-    const translationData = await res.json();
     if (!res.ok) {
+      const body = await res.json();
       throw new Error(
-        `Failed to translate with status code: ${res.status} (${res.statusText})\n${JSON.stringify(translationData, null, 2)}`,
+        `Failed to translate with status code: ${res.status} (${res.statusText})\n${JSON.stringify(body, null, 2)}`,
       );
     }
 
+    const translationData = await res.json();
     return Response.json({
       translatedText: translationData[0].translations[0].text,
     });
   } catch (e) {
     console.log((e as Error).message);
-    return Response.json({ error: (e as Error).message }, { status: 500 });
+    return Response.json(
+      { error: "translation failed 😭... try again!" },
+      { status: 500 },
+    );
   }
 }
