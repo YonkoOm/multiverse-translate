@@ -10,7 +10,12 @@ export async function POST(req: Request) {
   const srcLang = supportedLanguages[fromLang] || "";
   const targetLang = supportedLanguages[toLang] || "";
 
-  if (targetLang === "" && srcLang === "") {
+  if (srcLang == targetLang) {
+    return Response.json(
+      { error: "Cannot translate the same language 🙃" },
+      { status: 400 },
+    );
+  } else if (targetLang === "" && srcLang === "") {
     return Response.json(
       { error: `${fromLang} and ${toLang} not suppported` },
       { status: 400 },

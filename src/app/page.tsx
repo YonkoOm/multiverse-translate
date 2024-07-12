@@ -1,8 +1,10 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { mplus, lato } from "./fonts";
+import Dropdown from "./_components/Dropdown";
+import Translations from "./_components/Translations";
 
-type Translator = {
+export type Translator = {
   name: string;
   translation: string;
 };
@@ -10,17 +12,17 @@ type Translator = {
 export default function Home() {
   const [translationData, setTranslationData] = useState<Translator[]>([]);
   const [text, setText] = useState("");
-  const [fromLanguage, setFromLanguge] = useState("EN");
-  const [toLanguage, setToLanguage] = useState("EN");
+  const [fromLang, setFromLang] = useState("EN"); // TODO: language selection implementation
+  const [toLang, setToLang] = useState("EN");
+  const divRef = useRef<HTMLDivElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
-  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     const textArea = textAreaRef.current;
-    const form = formRef.current;
-    if (form !== null && textArea !== null) {
-      form.style.height = "auto"; // resets the "height" of texarea allowing it to shrink when removing content
-      form.style.height = `${textArea.scrollHeight - 75}px`; // set height to height of the content within textarea (that is the scrollHeight)
+    const div = divRef.current;
+    if (div !== null && textArea !== null) {
+      div.style.height = "auto"; // resets the "height" of texarea allowing it to shrink when removing content
+      div.style.height = `${textArea.scrollHeight + 100}px`; // set height to height of the content within textarea (that is the scrollHeight)
     }
   }, [text]);
 
@@ -46,14 +48,12 @@ export default function Home() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          text: text,
-          fromLang: "EN",
-          toLang: "KO",
-        }),
+        body: JSON.stringify({ text, fromLang, toLang }),
       });
 
-      if (!res.ok) {
+      if (res.status == 400) {
+        return;
+      } else if (!res.ok) {
         const body = await res.json();
         setTranslationData((prevTranslatedData) => [
           ...prevTranslatedData,
@@ -75,41 +75,34 @@ export default function Home() {
 
   return (
     <div className="w-full min-h-screen flex flex-row gap-24 justify-center items-center">
-      <form
-        ref={formRef}
-        onSubmit={translate}
-        className="relative w-[500px] h-[300px] min-h-[300px]" // min-h overrides height's value when height < 300px
+      <div
+        ref={divRef}
+        className="relative w-[550px] min-h-[375px] bg-[#E7DECD] rounded-xl flex flex-col outline-none focus-within:outline-1 focus-within:outline-sky-500"
       >
-        <textarea
-          ref={textAreaRef}
-          placeholder="Enter text here to translate :)"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          className={`outline-none focus:outline-1 focus:outline-sky-500 resize-none text-black p-5 pb-32 w-full h-full text-[28px] placeholder-slate-500 bg-[#E7DECD] rounded-xl overflow-hidden ${lato.className}`}
+        <Dropdown
+          toLang={toLang}
+          fromLang={fromLang}
+          setFromLang={setFromLang}
+          setToLang={setToLang}
         />
-        <button
-          type="submit"
-          className={`text-white font-bold absolute bottom-0 right-0 bg-[#677DB7] hover:bg-[#677DB7]/90 p-2 rounded-tl-lg rounded-br-xl ${mplus.className}`}
-        >
-          Translate
-        </button>
-      </form>
-      <div className="text-black gap-3 flex flex-col">
-        {translationData.map((text, i) => (
-          <div key={text.name + i} className="relative">
-            <div
-              className={`absolute text-[14px] text-white top-0 left-0 bg-[#677DB7] rounded-tl-lg rounded-br-lg p-1.5 ${mplus.className} font-medium`}
-            >
-              {text.name}
-            </div>
-            <div
-              className={`rounded-xl p-6 pt-10 w-[400px] min-h-[150px] bg-[#E7DECD] text-2xl flex items-center justify-center ${lato.className}`}
-            >
-              {text.translation}
-            </div>
-          </div>
-        ))}
+        <hr className="bg-black border-0 h-[1px]" />
+        <form onSubmit={translate} className="flex flex-col flex-1">
+          <textarea
+            ref={textAreaRef}
+            placeholder="Enter text here to translate :)"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            className={`outline-none resize-none text-black w-full h-full text-[28px] p-5 pt-2 placeholder-slate-500 bg-inherit overflow-hidden ${lato.className}`}
+          />
+          <button
+            type="submit"
+            className={`text-white font-bold w-fit self-end bg-[#677DB7] hover:bg-[#677DB7]/90 p-2 rounded-tl-lg rounded-br-xl ${mplus.className}`}
+          >
+            Translate
+          </button>
+        </form>
       </div>
+      <Translations translations={translationData} />
     </div>
   );
 }
