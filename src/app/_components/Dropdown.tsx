@@ -2,7 +2,8 @@ import Image from "next/image";
 import { languages } from "../_utils/languages";
 import { mplus } from "../fonts";
 import { useState } from "react";
-import DropDownContent from "./DropdownContent";
+import { motion, AnimatePresence } from "framer-motion";
+import DropdownContent from "./DropdownContent";
 
 type Props = {
   fromLang: string;
@@ -17,13 +18,14 @@ export default function Dropdown({
   setFromLang,
   setToLang,
 }: Props) {
+  const [fromLangDropIsOpen, setFromLangDropIsOpen] = useState(false);
   const [toLangDropIsOpen, setToLangDropIsOpen] = useState(false);
-  const [fromLangDropIsOpen, setLangDropFromIsOpen] = useState(false);
+  const [count, setCount] = useState(0); // solution to fix key issue with AnimatePresence when quickly exiting and entering the component
 
-  const toggleDropdown = (lang: string) => {
+  const setLanguage = (lang: string) => {
     if (fromLangDropIsOpen) {
       setFromLang(lang);
-      setLangDropFromIsOpen(false);
+      setFromLangDropIsOpen(false);
     }
     if (toLangDropIsOpen) {
       setToLang(lang);
@@ -31,42 +33,54 @@ export default function Dropdown({
     }
   };
 
+  // TODO: figure out width for the dropdown buttons (maybe add another translation box)
   return (
-    <>
-      <div className={`flex flex-row w-full ${mplus.className} text-base`}>
-        <div
-          className={
-            "text-white w-fit flex gap-x-[6px] bg-[#677DB7] cursor-pointer p-3 shadow rounded-tl-xl font-bold"
-          }
-          onClick={() => setLangDropFromIsOpen(!fromLangDropIsOpen)}
+    <div>
+      <div
+        className={`flex flex-row w-full ${mplus.className} text-base justify-between`}
+      >
+        <button
+          className="text-white flex gap-x-[6px] bg-[#677DB7] hover:bg-[#677DB7]/90 p-3 rounded-tl-xl font-bold items-center justify-center"
+          onClick={() => {
+            if (toLangDropIsOpen) setToLangDropIsOpen(false);
+            setFromLangDropIsOpen(!fromLangDropIsOpen);
+            setCount(count + 1);
+          }}
         >
           <div>{languages[fromLang]}</div>
-          <div
-            className={`w-[14px] ${fromLangDropIsOpen ? "rotate-180" : "rotate-0"}`}
+          <motion.div
+            className="w-[14px] h-[14px] relative"
+            animate={{ rotate: fromLangDropIsOpen ? 180 : 0 }}
           >
-            <Image src="/down-chevron.svg" alt="chevron" fill />
-          </div>
-        </div>
-        <div
-          className="text-white flex gap-x-[6px] ml-auto bg-[#677DB7] cursor-pointer p-3 shadow rounded-tr-xl font-bold"
-          onClick={() => setToLangDropIsOpen(!toLangDropIsOpen)}
+            <Image src="/down-chevron.svg" alt="down-chevron" fill />
+          </motion.div>
+        </button>
+        <button
+          className="text-white flex gap-x-[6px] bg-[#677DB7] hover:bg-[#677DB7]/90 p-3 rounded-tr-xl font-bold items-center justify-center"
+          onClick={() => {
+            if (fromLangDropIsOpen) setFromLangDropIsOpen(false);
+            setToLangDropIsOpen(!toLangDropIsOpen);
+            setCount(count + 1);
+          }}
         >
           <div>{languages[toLang]}</div>
-          <div
-            className={`w-[14px] ${toLangDropIsOpen ? "rotate-180" : "rotate-0"}`}
+          <motion.div
+            className="w-[14px] h-[14px] relative"
+            animate={{ rotate: toLangDropIsOpen ? 180 : 0 }}
           >
-            <Image src="/down-chevron.svg" alt="chevron" fill />
-          </div>
-        </div>
+            <Image src="/down-chevron.svg" alt="down-chevron" fill />
+          </motion.div>
+        </button>
       </div>
-      {fromLangDropIsOpen || toLangDropIsOpen ? (
-        <DropDownContent
-          activeLang={fromLangDropIsOpen ? fromLang : toLang}
-          toggleDropdown={toggleDropdown}
-        />
-      ) : (
-        <></>
-      )}
-    </>
+      <AnimatePresence mode="wait">
+        {(fromLangDropIsOpen || toLangDropIsOpen) && (
+          <DropdownContent
+            key={count}
+            activeLang={fromLangDropIsOpen ? fromLang : toLang}
+            setLanguage={setLanguage}
+          />
+        )}
+      </AnimatePresence>
+    </div>
   );
 }

@@ -4,15 +4,16 @@ import { mplus, lato } from "./fonts";
 import Dropdown from "./_components/Dropdown";
 import Translations from "./_components/Translations";
 
-export type Translator = {
-  name: string;
-  translation: string;
+export type Translation = {
+  translator: string;
+  text: string;
 };
 
 export default function Home() {
-  const [translationData, setTranslationData] = useState<Translator[]>([]);
+  const [translationData, setTranslationData] = useState<Translation[]>([]);
   const [text, setText] = useState("");
-  const [fromLang, setFromLang] = useState("EN"); // TODO: language selection implementation
+  const [textChanged, setTextChanged] = useState(false);
+  const [fromLang, setFromLang] = useState("EN");
   const [toLang, setToLang] = useState("EN");
   const divRef = useRef<HTMLDivElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -26,6 +27,10 @@ export default function Home() {
     }
   }, [text]);
 
+  useEffect(() => {
+    setTextChanged(true);
+  }, [text, fromLang, toLang]);
+
   const apis = [
     { name: "DeepL", translator: "/api/DeepLTranslate" },
     { name: "Google", translator: "/api/GoogleTranslate" },
@@ -35,12 +40,11 @@ export default function Home() {
 
   const translate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setTranslationData([]);
 
     // TODO: add alert
-    if (text.trim() === "") {
-      return;
-    }
+    if (!textChanged || text.trim() == "") return;
+
+    setTranslationData([]);
 
     apis.forEach(async (api) => {
       const res = await fetch(api.translator, {
@@ -58,8 +62,8 @@ export default function Home() {
         setTranslationData((prevTranslatedData) => [
           ...prevTranslatedData,
           {
-            name: api.name,
-            translation: body.error,
+            translator: api.name,
+            text: body.error,
           },
         ]);
         return;
@@ -68,16 +72,17 @@ export default function Home() {
       const translationData: { translatedText: string } = await res.json();
       setTranslationData((prevTranslatedData) => [
         ...prevTranslatedData,
-        { name: api.name, translation: translationData.translatedText },
+        { translator: api.name, text: translationData.translatedText },
       ]);
     });
+    setTextChanged(false);
   };
 
   return (
-    <div className="w-full min-h-screen flex flex-row gap-24 justify-center items-center">
+    <div className="w-full min-h-screen flex flex-col md:flex-row gap-24 justify-center items-center">
       <div
         ref={divRef}
-        className="relative w-[550px] min-h-[375px] bg-[#E7DECD] rounded-xl flex flex-col outline-none focus-within:outline-1 focus-within:outline-sky-500"
+        className="relative w-[575px] h-[375px] min-h-[375px] bg-[#E7DECD] rounded-xl flex flex-col outline-none focus:ring-outline-1 focus:ring-outline-sky-500"
       >
         <Dropdown
           toLang={toLang}
