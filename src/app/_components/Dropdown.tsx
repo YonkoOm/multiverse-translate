@@ -22,6 +22,11 @@ export default function Dropdown({
   const [toLangDropIsOpen, setToLangDropIsOpen] = useState(false);
   const [count, setCount] = useState(0); // solution to fix key issue with AnimatePresence when quickly exiting and entering the component
 
+  const switchLang = () => {
+    setFromLang(toLang);
+    setToLang(fromLang);
+  };
+
   const setLanguage = (lang: string) => {
     if (fromLangDropIsOpen) {
       setFromLang(lang);
@@ -54,6 +59,14 @@ export default function Dropdown({
           >
             <Image src="/down-chevron.svg" alt="down-chevron" fill />
           </motion.div>
+        </button>
+        <button
+          className="text-white flex gap-x-[6px] items-center p-2"
+          onClick={switchLang}
+        >
+          <div className="w-10 h-10 relative">
+            <Image src="/switch.png" alt="switch" fill />
+          </div>
         </button>
         <button
           className="text-white flex gap-x-[6px] bg-[#677DB7] hover:bg-[#677DB7]/90 p-3 rounded-tr-xl font-bold items-center justify-center"
