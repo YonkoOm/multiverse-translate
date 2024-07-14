@@ -12,11 +12,11 @@ export type Translation = {
 export default function Home() {
   const [translationData, setTranslationData] = useState<Translation[]>([]);
   const [text, setText] = useState("");
-  const [textChanged, setTextChanged] = useState(false);
   const [fromLang, setFromLang] = useState("EN");
   const [toLang, setToLang] = useState("EN");
   const divRef = useRef<HTMLDivElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const translationChanged = useRef(false);
 
   useEffect(() => {
     const textArea = textAreaRef.current;
@@ -28,7 +28,7 @@ export default function Home() {
   }, [text]);
 
   useEffect(() => {
-    setTextChanged(true);
+    translationChanged.current = true;
   }, [text, fromLang, toLang]);
 
   const apis = [
@@ -42,7 +42,7 @@ export default function Home() {
     e.preventDefault();
 
     // TODO: add alert
-    if (!textChanged || text.trim() == "") return;
+    if (!translationChanged.current || text.trim() == "") return;
 
     setTranslationData([]);
 
@@ -75,7 +75,7 @@ export default function Home() {
         { translator: api.name, text: translationData.translatedText },
       ]);
     });
-    setTextChanged(false);
+    translationChanged.current = false;
   };
 
   const checkEnterPress = (e: React.KeyboardEvent<HTMLFormElement>) => {
@@ -102,10 +102,10 @@ export default function Home() {
         >
           <textarea
             ref={textAreaRef}
-            placeholder="Enter text here to translate :)"
+            placeholder="hit enter or press translate to query. `Shift + Enter` for new line"
             value={text}
             onChange={(e) => setText(e.target.value)}
-            className={`outline-none resize-none text-black w-full h-full text-[28px] p-5 pt-2 placeholder-slate-500 bg-inherit overflow-hidden ${lato.className}`}
+            className={`outline-none resize-none text-black w-full h-full text-[28px] p-5 pt-2 placeholder-slate-500 bg-inherit overflow-hidden ${lato.className} placeholder:text-2xl`}
           />
           <button
             type="submit"
