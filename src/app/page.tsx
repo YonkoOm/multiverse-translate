@@ -78,6 +78,10 @@ export default function Home() {
     setTextChanged(false);
   };
 
+  const checkEnterPress = (e: React.KeyboardEvent<HTMLFormElement>) => {
+    if (e.key == "Enter" && !e.shiftKey) translate(e);
+  };
+
   return (
     <div className="w-full min-h-screen flex flex-col md:flex-row gap-24 justify-center items-center">
       <div
@@ -91,7 +95,11 @@ export default function Home() {
           setToLang={setToLang}
         />
         <hr className="bg-black border-0 h-[1px]" />
-        <form onSubmit={translate} className="flex flex-col flex-1">
+        <form
+          onSubmit={translate}
+          onKeyDown={checkEnterPress}
+          className="flex flex-col flex-1"
+        >
           <textarea
             ref={textAreaRef}
             placeholder="Enter text here to translate :)"

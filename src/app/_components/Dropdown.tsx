@@ -42,7 +42,7 @@ export default function Dropdown({
   return (
     <div>
       <div
-        className={`flex flex-row w-full ${mplus.className} text-base justify-between`}
+        className={`flex flex-row w-full justify-between ${mplus.className} text-sm`}
       >
         <button
           className="text-white flex gap-x-[6px] bg-[#677DB7] hover:bg-[#677DB7]/90 p-3 rounded-tl-xl font-bold items-center justify-center"
@@ -61,7 +61,7 @@ export default function Dropdown({
           </motion.div>
         </button>
         <button
-          className="text-white flex gap-x-[6px] items-center p-2"
+          className="absolute left-[50%] translate-x-[-50%]"
           onClick={switchLang}
         >
           <div className="w-10 h-10 relative">
