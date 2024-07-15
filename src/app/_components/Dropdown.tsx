@@ -66,7 +66,7 @@ export default function Dropdown({
           onClick={switchLang}
         >
           <div className="w-10 h-10 relative">
-            <Image src="/switch.png" alt="switch" fill />
+            <Image src="/switch.png" alt="switch" fill sizes="100px" priority />
           </div>
         </button>
         <button
