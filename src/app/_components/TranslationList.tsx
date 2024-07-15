@@ -3,7 +3,7 @@ import { mplus, lato } from "../fonts";
 import { motion, Variants } from "framer-motion";
 
 // TODO: fix translations' entrances
-export default function Translations({
+export default function TranslationList({
   translations,
 }: {
   translations: Translation[];
@@ -18,13 +18,13 @@ export default function Translations({
   };
   return (
     <div className="text-black gap-3 flex flex-col">
-      {translations.map((translation, i) => (
+      {translations.map((translation) => (
         <motion.div
           variants={enterAnimation}
           initial="initial"
           animate="enter"
           transition={{ duration: 0.6 }}
-          key={translation.translator + i}
+          key={translation.translator}
           className="relative"
         >
           <div

@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { mplus, lato } from "./fonts";
 import Dropdown from "./_components/Dropdown";
-import Translations from "./_components/Translations";
+import TranslationList from "./_components/TranslationList";
 
 export type Translation = {
   translator: string;
@@ -10,7 +10,7 @@ export type Translation = {
 };
 
 export default function Home() {
-  const [translationData, setTranslationData] = useState<Translation[]>([]);
+  const [translations, setTranslations] = useState<Translation[]>([]);
   const [text, setText] = useState("");
   const [fromLang, setFromLang] = useState("EN");
   const [toLang, setToLang] = useState("EN");
@@ -44,7 +44,7 @@ export default function Home() {
     // TODO: add alert
     if (!translationChanged.current || text.trim() == "") return;
 
-    setTranslationData([]);
+    setTranslations([]);
 
     apis.forEach(async (api) => {
       const res = await fetch(api.translator, {
@@ -59,8 +59,8 @@ export default function Home() {
         return;
       } else if (!res.ok) {
         const body = await res.json();
-        setTranslationData((prevTranslatedData) => [
-          ...prevTranslatedData,
+        setTranslations((prevTranslation) => [
+          ...prevTranslation,
           {
             translator: api.name,
             text: body.error,
@@ -69,10 +69,10 @@ export default function Home() {
         return;
       }
 
-      const translationData: { translatedText: string } = await res.json();
-      setTranslationData((prevTranslatedData) => [
+      const { translatedText }: { translatedText: string } = await res.json();
+      setTranslations((prevTranslatedData) => [
         ...prevTranslatedData,
-        { translator: api.name, text: translationData.translatedText },
+        { translator: api.name, text: translatedText },
       ]);
     });
     translationChanged.current = false;
@@ -82,11 +82,12 @@ export default function Home() {
     if (e.key == "Enter" && !e.shiftKey) translate(e);
   };
 
+  // TODO: maybe move translation container so it doesn't it doesn't need to move when translations appear
   return (
     <div className="w-full min-h-screen flex flex-col md:flex-row gap-24 justify-center items-center">
       <div
         ref={divRef}
-        className="relative w-[575px] h-[375px] min-h-[375px] bg-[#E7DECD] rounded-xl flex flex-col outline-none focus:ring-outline-1 focus:ring-outline-sky-500"
+        className="relative w-[575px] h-[375px] min-h-[375px] bg-[#E7DECD] rounded-xl flex flex-col focus-within:shadow-[0px_0px_0px_1.5px_#8F99FB]"
       >
         <Dropdown
           toLang={toLang}
@@ -115,7 +116,7 @@ export default function Home() {
           </button>
         </form>
       </div>
-      <Translations translations={translationData} />
+      <TranslationList translations={translations} />
     </div>
   );
 }
