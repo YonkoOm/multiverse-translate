@@ -130,7 +130,7 @@ export default function Home() {
           </button>
         </form>
       </div>
-      <TranslationList translations={translations} />
+      <TranslationList translations={translations} fontSize={fontSize} />
     </div>
   );
 }
