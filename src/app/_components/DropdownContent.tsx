@@ -21,7 +21,7 @@ export default function DropdownContent({ activeLang, setLanguage }: Props) {
     exit: {
       opacity: 0,
       height: "50%",
-      transition: { duration: 0.3 },
+      transition: { duration: 0.2 },
     },
   };
   return (
@@ -30,10 +30,10 @@ export default function DropdownContent({ activeLang, setLanguage }: Props) {
       initial="initial"
       exit="exit"
       animate="enter"
-      className="absolute w-full h-full bg-[#E7DECD] rounded-bl-xl rounded-br-xl z-10 overflow-hidden"
+      className="absolute w-full max-h-[350px] shadow-xl bg-[#E7DECD] rounded-bl-xl rounded-br-xl z-10 overflow-hidden"
     >
       <div
-        className={`grid grid-cols-3 gap-y-1 gap-x-1 ${lato.className} text-base p-2 overflow-y-auto h-full`}
+        className={`grid grid-cols-3 gap-y-1 gap-x-1 ${lato.className} text-base p-2 overflow-y-scroll h-full`}
       >
         {Object.keys(languages).map((lang) => (
           <div

@@ -23,8 +23,10 @@ export default function Dropdown({
   const [count, setCount] = useState(0); // solution to fix key issue with AnimatePresence when quickly exiting and entering the component
 
   const switchLang = () => {
-    setFromLang(toLang);
-    setToLang(fromLang);
+    if (toLang != fromLang) {
+      setFromLang(toLang);
+      setToLang(fromLang);
+    }
   };
 
   const setLanguage = (lang: string) => {

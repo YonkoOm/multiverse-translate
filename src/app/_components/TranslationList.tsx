@@ -2,12 +2,13 @@ import { Translation } from "../page";
 import { mplus, lato } from "../fonts";
 import { motion, Variants } from "framer-motion";
 
-// TODO: fix translations' entrances
-export default function TranslationList({
-  translations,
-}: {
+type Props = {
   translations: Translation[];
-}) {
+  fontSize: number;
+};
+
+// TODO: fix translations' entrances
+export default function TranslationList({ translations, fontSize }: Props) {
   const enterAnimation: Variants = {
     initial: {
       scale: 0,
@@ -16,6 +17,7 @@ export default function TranslationList({
       scale: 1,
     },
   };
+
   return (
     <div className="text-black gap-3 flex flex-col">
       {translations.map((translation) => (
@@ -33,7 +35,8 @@ export default function TranslationList({
             {translation.translator}
           </div>
           <div
-            className={`rounded-xl p-6 pt-10 w-[400px] min-h-[150px] bg-[#E7DECD] text-2xl flex items-center justify-center ${lato.className}`}
+            className={`rounded-xl p-6 pt-10 w-[400px] min-h-[150px] bg-[#E7DECD]  flex items-center justify-center ${lato.className}`}
+            style={{ fontSize }}
           >
             {translation.text}
           </div>

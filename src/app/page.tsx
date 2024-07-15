@@ -14,16 +14,29 @@ export default function Home() {
   const [text, setText] = useState("");
   const [fromLang, setFromLang] = useState("EN");
   const [toLang, setToLang] = useState("EN");
+  const [fontSize, setFontSize] = useState(18);
   const divRef = useRef<HTMLDivElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const translationChanged = useRef(false);
 
   useEffect(() => {
     const textArea = textAreaRef.current;
-    const div = divRef.current;
-    if (div !== null && textArea !== null) {
-      div.style.height = "auto"; // resets the "height" of texarea allowing it to shrink when removing content
-      div.style.height = `${textArea.scrollHeight + 100}px`; // set height to height of the content within textarea (that is the scrollHeight)
+    if (textArea != null) {
+      if (text.length > 400) {
+        setFontSize(18);
+      } else if (text.length > 300) {
+        setFontSize(20);
+      } else if (text.length > 200) {
+        setFontSize(24);
+      } else {
+        setFontSize(28);
+      }
+
+      const div = divRef.current;
+      if (div !== null) {
+        div.style.height = "auto"; // resets the "height" of texarea allowing it to shrink when removing content
+        div.style.height = `${textArea.scrollHeight + 100}px`; // set height to height of the content within textarea (that is the scrollHeight)
+      }
     }
   }, [text]);
 
@@ -106,7 +119,8 @@ export default function Home() {
             placeholder="hit enter or press translate to query. `Shift + Enter` for new line"
             value={text}
             onChange={(e) => setText(e.target.value)}
-            className={`outline-none resize-none text-black w-full h-full text-[28px] p-5 pt-2 placeholder-slate-500 bg-inherit overflow-hidden ${lato.className} placeholder:text-2xl`}
+            className={`outline-none resize-none text-black w-full h-full p-5 pt-2 placeholder-slate-500 bg-inherit overflow-hidden ${lato.className} placeholder:text-2xl`}
+            style={{ fontSize }}
           />
           <button
             type="submit"
