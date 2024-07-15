@@ -18,6 +18,9 @@ export default function Home() {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const translationChanged = useRef(false);
 
+  const getFontSize = () =>
+    textAreaRef.current ? textAreaRef.current.style.fontSize : undefined;
+
   useEffect(() => {
     const textArea = textAreaRef.current;
     if (textArea != null) {
@@ -25,10 +28,12 @@ export default function Home() {
         textArea.style.fontSize = "18px";
       } else if (text.length > 300) {
         textArea.style.fontSize = "20px";
-      } else if (text.length > 150) {
+      } else if (text.length > 200) {
+        textArea.style.fontSize = "22px";
+      } else if (text.length > 100) {
         textArea.style.fontSize = "24px";
       } else {
-        textArea.style.fontSize = "28px";
+        textArea.style.fontSize = "26px";
       }
 
       const div = divRef.current;
@@ -128,14 +133,7 @@ export default function Home() {
           </button>
         </form>
       </div>
-      <TranslationList
-        translations={translations}
-        fontSize={
-          textAreaRef.current !== null
-            ? parseInt(textAreaRef.current.style.fontSize)
-            : undefined
-        }
-      />
+      <TranslationList translations={translations} getFontSize={getFontSize} />
     </div>
   );
 }
