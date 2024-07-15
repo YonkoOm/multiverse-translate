@@ -14,7 +14,6 @@ export default function Home() {
   const [text, setText] = useState("");
   const [fromLang, setFromLang] = useState("EN");
   const [toLang, setToLang] = useState("EN");
-  const [fontSize, setFontSize] = useState(18);
   const divRef = useRef<HTMLDivElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const translationChanged = useRef(false);
@@ -22,14 +21,14 @@ export default function Home() {
   useEffect(() => {
     const textArea = textAreaRef.current;
     if (textArea != null) {
-      if (text.length > 400) {
-        setFontSize(18);
+      if (text.length > 450) {
+        textArea.style.fontSize = "18px";
       } else if (text.length > 300) {
-        setFontSize(20);
-      } else if (text.length > 200) {
-        setFontSize(24);
+        textArea.style.fontSize = "20px";
+      } else if (text.length > 150) {
+        textArea.style.fontSize = "24px";
       } else {
-        setFontSize(28);
+        textArea.style.fontSize = "28px";
       }
 
       const div = divRef.current;
@@ -120,7 +119,6 @@ export default function Home() {
             value={text}
             onChange={(e) => setText(e.target.value)}
             className={`outline-none resize-none text-black w-full h-full p-5 pt-2 placeholder-slate-500 bg-inherit overflow-hidden ${lato.className} placeholder:text-2xl`}
-            style={{ fontSize }}
           />
           <button
             type="submit"
@@ -130,7 +128,14 @@ export default function Home() {
           </button>
         </form>
       </div>
-      <TranslationList translations={translations} fontSize={fontSize} />
+      <TranslationList
+        translations={translations}
+        fontSize={
+          textAreaRef.current !== null
+            ? parseInt(textAreaRef.current.style.fontSize)
+            : undefined
+        }
+      />
     </div>
   );
 }
