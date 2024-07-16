@@ -4,12 +4,12 @@ import { motion, Variants } from "framer-motion";
 
 type Props = {
   translations: Translation[];
-  getFontSize: () => string | undefined;
+  fontSize: React.RefObject<number | null>;
 };
 
 // TODO: fix translations' entrances
 
-export default function TranslationList({ translations, getFontSize }: Props) {
+export default function TranslationList({ translations, fontSize }: Props) {
   const enterAnimation: Variants = {
     initial: {
       scale: 0,
@@ -36,8 +36,10 @@ export default function TranslationList({ translations, getFontSize }: Props) {
             {translation.translator}
           </div>
           <div
-            className={`rounded-xl p-6 pt-10 w-[400px] min-h-[150px] bg-[#E7DECD]  flex items-center justify-center ${lato.className}`}
-            style={{ fontSize: getFontSize() }}
+            className={`rounded-xl p-6 pt-10 w-[400px] min-h-[150px] bg-[#E7DECD] flex items-center justify-center ${lato.className}`}
+            style={{
+              fontSize: fontSize.current ? fontSize.current : undefined,
+            }}
           >
             {translation.text}
           </div>
