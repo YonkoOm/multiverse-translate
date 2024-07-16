@@ -4,13 +4,13 @@ import { motion, Variants } from "framer-motion";
 
 type Props = {
   translations: Translation[];
-  fontSize: React.RefObject<number | null>;
+  fontSize: number;
 };
 
 // TODO: fix translations' entrances
 
 export default function TranslationList({ translations, fontSize }: Props) {
-  const enterAnimation: Variants = {
+  const translationAnimation: Variants = {
     initial: {
       scale: 0,
     },
@@ -23,7 +23,7 @@ export default function TranslationList({ translations, fontSize }: Props) {
     <div className="text-black gap-3 flex flex-col">
       {translations.map((translation) => (
         <motion.div
-          variants={enterAnimation}
+          variants={translationAnimation}
           initial="initial"
           animate="enter"
           transition={{ duration: 0.6 }}
@@ -37,9 +37,7 @@ export default function TranslationList({ translations, fontSize }: Props) {
           </div>
           <div
             className={`rounded-xl p-6 pt-10 w-[400px] min-h-[150px] bg-[#E7DECD] flex items-center justify-center ${lato.className}`}
-            style={{
-              fontSize: fontSize.current ? fontSize.current : undefined,
-            }}
+            style={{ fontSize }}
           >
             {translation.text}
           </div>

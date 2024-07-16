@@ -8,7 +8,7 @@ type Props = {
 };
 
 export default function DropdownContent({ activeLang, setLanguage }: Props) {
-  const openAnimation: Variants = {
+  const dropdownAnimation: Variants = {
     initial: {
       opacity: 0,
       height: 0,
@@ -26,7 +26,7 @@ export default function DropdownContent({ activeLang, setLanguage }: Props) {
   };
   return (
     <motion.div
-      variants={openAnimation}
+      variants={dropdownAnimation}
       initial="initial"
       exit="exit"
       animate="enter"

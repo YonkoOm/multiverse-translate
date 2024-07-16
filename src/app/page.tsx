@@ -13,7 +13,8 @@ export default function Home() {
   const [translations, setTranslations] = useState<Translation[]>([]);
   const [fromLang, setFromLang] = useState("EN");
   const [toLang, setToLang] = useState("EN");
-  const fontSize = useRef<number | null>(null);
+  const [listFontSize, setListFontSize] = useState(26);
+  const [formFontSize, setFormFontSize] = useState(26);
   const inputContainerRef = useRef<HTMLDivElement>(null);
   const translationChanged = useRef(false);
 
@@ -31,8 +32,10 @@ export default function Home() {
   const translate = async (text: string) => {
     // TODO: add alert
     if (!translationChanged.current || text.trim() == "") return;
+    setListFontSize(formFontSize);
 
     setTranslations([]);
+    translationChanged.current = false;
 
     apis.forEach(async (api) => {
       const res = await fetch(api.translator, {
@@ -63,8 +66,6 @@ export default function Home() {
         { translator: api.name, text: translatedText },
       ]);
     });
-
-    translationChanged.current = false;
   };
 
   // TODO: maybe move translation input container so it doesn't it doesn't need to move when translations appear
@@ -72,7 +73,7 @@ export default function Home() {
     <div className="w-full min-h-screen flex flex-col md:flex-row gap-24 justify-center items-center">
       <div
         ref={inputContainerRef}
-        className="relative w-[575px] h-[375px] min-h-[375px] bg-[#E7DECD] rounded-xl flex flex-col focus-within:shadow-[0px_0px_0px_1.5px_#8F99FB]"
+        className="relative w-[575px] h-[400px] min-h-[400px] bg-[#E7DECD] rounded-xl flex flex-col focus-within:shadow-[0px_0px_0px_1.5px_#8F99FB]"
       >
         <Dropdown
           toLang={toLang}
@@ -83,12 +84,12 @@ export default function Home() {
         <hr className="bg-black border-0 h-[1px]" />
         <TranslationForm
           translate={translate}
-          fontSize={fontSize}
           inputContainerRef={inputContainerRef}
           translationChanged={translationChanged}
+          setFormFontSize={setFormFontSize}
         />
       </div>
-      <TranslationList translations={translations} fontSize={fontSize} />
+      <TranslationList translations={translations} fontSize={listFontSize} />
     </div>
   );
 }

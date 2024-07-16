@@ -2,17 +2,17 @@ import { useState, useRef, useEffect } from "react";
 import { mplus, lato } from "../fonts";
 
 type Props = {
-  inputContainerRef: React.RefObject<HTMLDivElement>;
-  fontSize: React.MutableRefObject<number | null>;
-  translationChanged: React.MutableRefObject<boolean>;
   translate: (text: string) => Promise<void>;
+  inputContainerRef: React.RefObject<HTMLDivElement>;
+  translationChanged: React.MutableRefObject<boolean>;
+  setFormFontSize: React.Dispatch<React.SetStateAction<number>>;
 };
 
 export default function TranslationForm({
-  inputContainerRef,
   translate,
-  fontSize,
+  inputContainerRef,
   translationChanged,
+  setFormFontSize,
 }: Props) {
   const [text, setText] = useState("");
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -30,25 +30,23 @@ export default function TranslationForm({
     const textArea = textAreaRef.current;
     if (textArea === null) return;
 
-    if (text.length > 450) {
-      fontSize.current = 18;
-    } else if (text.length > 300) {
-      fontSize.current = 20;
-    } else if (text.length > 200) {
-      fontSize.current = 22;
-    } else if (text.length > 100) {
-      fontSize.current = 24;
+    if (text.length > 150) {
+      setFormFontSize(18);
+      textArea.style.fontSize = 18 + "px";
+    } else if (text.length > 50) {
+      setFormFontSize(20);
+      textArea.style.fontSize = 20 + "px";
     } else {
-      fontSize.current = 26;
+      setFormFontSize(24);
+      textArea.style.fontSize = 24 + "px";
     }
-    textArea.style.fontSize = fontSize.current + "px";
 
     const container = inputContainerRef.current;
     if (container !== null) {
       container.style.height = "auto"; // resets the "height" of texarea allowing it to shrink when removing content
       container.style.height = `${textArea.scrollHeight + 100}px`; // set height to height of the content within textarea (that is the scrollHeight)
     }
-  }, [text, inputContainerRef, fontSize]);
+  }, [text, inputContainerRef, setFormFontSize]);
 
   return (
     <form
