@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import Dropdown from "./_components/Dropdown";
 import TranslationList from "./_components/TranslationList";
 import TranslationForm from "./_components/TranslationForm";
+import { motion } from "framer-motion";
 
 export type Translation = {
   translator: string;
@@ -68,10 +69,10 @@ export default function Home() {
     });
   };
 
-  // TODO: maybe move translation input container so it doesn't it doesn't need to move when translations appear
   return (
     <div className="w-full min-h-screen flex flex-col md:flex-row gap-24 justify-center items-center">
-      <div
+      <motion.div
+        layout
         ref={inputContainerRef}
         className="relative w-[575px] h-[400px] min-h-[400px] bg-[#E7DECD] rounded-xl flex flex-col focus-within:shadow-[0px_0px_0px_1.5px_#8F99FB]"
       >
@@ -88,7 +89,7 @@ export default function Home() {
           translationChanged={translationChanged}
           setFormFontSize={setFormFontSize}
         />
-      </div>
+      </motion.div>
       <TranslationList translations={translations} fontSize={listFontSize} />
     </div>
   );

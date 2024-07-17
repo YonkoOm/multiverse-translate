@@ -6,8 +6,6 @@ type Props = {
   fontSize: number;
 };
 
-// TODO: fix translations' entrances
-
 export default function TranslationList({ translations, fontSize }: Props) {
   return (
     <div className="text-black gap-3 flex flex-col" style={{ fontSize }}>

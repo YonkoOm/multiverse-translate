@@ -16,7 +16,7 @@ export default function Translation({
   fontSize,
   itemIndex,
 }: Props) {
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
 
   const translationAnimation: Variants = {
     initial: {
@@ -54,7 +54,7 @@ export default function Translation({
     },
     enter: {
       opacity: 1,
-      transition: { duration: 0.1, delay: 0.3 },
+      transition: { duration: 0.1, delay: 0.2 },
     },
     exit: {
       opacity: 0,
@@ -63,27 +63,27 @@ export default function Translation({
   };
 
   useEffect(() => {
-    if (text.length > 100 && itemIndex != 0) {
-      setShow(false);
-    }
+    if (text.length < 100 || itemIndex === 0) setShow(true);
   }, [text.length, itemIndex]);
 
   return (
     <motion.div
+      layout
       variants={translationAnimation}
       initial="initial"
       animate="enter"
       transition={{ duration: 0.6 }}
       className="w-[400px] bg-[#E7DECD] rounded-xl flex flex-col"
     >
-      <div className="flex relative">
+      <div className="flex justify-between relative">
         <motion.div
-          className={`text-[14px] text-white bg-[#677DB7] rounded-tl-lg ${show ? "rounded-br-md" : undefined} p-1.5 ${mplus.className} font-medium`}
+          animate={{ transition: { duration: 1 } }}
+          className={`text-[14px] text-white bg-[#677DB7] rounded-tl-lg ${show && "rounded-br-md"} p-1.5 ${mplus.className} font-medium`}
         >
           {translator}
         </motion.div>
         <button
-          className={`bg-[#677DB7] ${show ? "rounded-bl-md " : "rounded-br-lg"} rounded-tr-lg p-2 hover:bg-[#677DB7]/90 ml-auto`}
+          className={`bg-[#677DB7] ${show ? "rounded-bl-md " : "rounded-br-lg"} rounded-tr-lg p-2 hover:bg-[#677DB7]/90`}
           onClick={() => setShow(!show)}
         >
           <motion.div animate={{ rotate: show ? 90 : 0 }}>
