@@ -70,26 +70,13 @@ export default function Translation({
     return () => clearTimeout(showTimeout);
   }, [text.length, itemIndex]);
 
-  const addPadding = () => {
-    animate(
-      scope.current,
-      {
-        paddingTop: 8,
-        paddingLeft: 12,
-        paddingRight: 12,
-        paddingBottom: 8,
-      },
-      { duration: 0.1 },
-    );
-  };
-
   return (
     <motion.div
       layout
       variants={translationAnimation}
       initial="initial"
       animate="enter"
-      transition={{ duration: 0.6 }}
+      transition={{ duration: 0.5 }}
       className="w-[400px] bg-[#E7DECD] rounded-xl flex flex-col"
     >
       <div className="flex justify-between">
@@ -118,14 +105,14 @@ export default function Translation({
           <motion.div
             className={`text-[${fontSize}px] flex justify-center items-center ${lato.className}`}
             key={translator}
+            ref={scope}
             variants={textContainerAnimation}
             initial="initial"
             animate="enter"
             exit="exit"
-            onAnimationComplete={addPadding}
           >
             <motion.div
-              ref={scope}
+              className="py-2 px-3"
               variants={textAnimation}
               initial="initial"
               animate="enter"
