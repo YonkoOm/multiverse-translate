@@ -1,5 +1,5 @@
 import { mplus, lato } from "../fonts";
-import { AnimatePresence, motion, useAnimate, Variants } from "framer-motion";
+import { AnimatePresence, motion, Variants } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -17,7 +17,6 @@ export default function Translation({
   itemIndex,
 }: Props) {
   const [show, setShow] = useState(false);
-  const [scope, animate] = useAnimate();
 
   const translationAnimation: Variants = {
     initial: {
@@ -105,7 +104,6 @@ export default function Translation({
           <motion.div
             className={`text-[${fontSize}px] flex justify-center items-center ${lato.className}`}
             key={translator}
-            ref={scope}
             variants={textContainerAnimation}
             initial="initial"
             animate="enter"
