@@ -1,5 +1,5 @@
 import { mplus, lato } from "../fonts";
-import { AnimatePresence, motion, Variants } from "framer-motion";
+import { AnimatePresence, motion, useAnimate, Variants } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -17,6 +17,7 @@ export default function Translation({
   itemIndex,
 }: Props) {
   const [show, setShow] = useState(false);
+  const [scope, animate] = useAnimate();
 
   const translationAnimation: Variants = {
     initial: {
@@ -31,19 +32,14 @@ export default function Translation({
 
   const textContainerAnimation: Variants = {
     initial: {
-      height: 0,
+      height: "0px",
     },
     enter: {
       height: text.length < 100 ? "125px" : "auto",
-      padding: 8,
-      paddingLeft: 12,
-      paddingRight: 12,
-      transition: { duration: 0.3 },
+      transition: { duration: 0.3, ease: "easeInOut" },
     },
     exit: {
-      padding: 0,
-      minHeight: 0,
-      height: 0,
+      height: "0px",
       transition: { duration: 0.25 },
     },
   };
@@ -54,7 +50,11 @@ export default function Translation({
     },
     enter: {
       opacity: 1,
-      transition: { duration: 0.1, delay: 0.2 },
+      transition: {
+        duration: 0.1,
+        delay: 0.2,
+        ease: "easeInOut",
+      },
     },
     exit: {
       opacity: 0,
@@ -63,8 +63,25 @@ export default function Translation({
   };
 
   useEffect(() => {
-    if (text.length < 100 || itemIndex === 0) setShow(true);
+    const showTimeout = setTimeout(() => {
+      if (text.length < 100 || itemIndex === 0) setShow(true);
+    }, 750);
+
+    return () => clearTimeout(showTimeout);
   }, [text.length, itemIndex]);
+
+  const addPadding = () => {
+    animate(
+      scope.current,
+      {
+        paddingTop: 8,
+        paddingLeft: 12,
+        paddingRight: 12,
+        paddingBottom: 8,
+      },
+      { duration: 0.1 },
+    );
+  };
 
   return (
     <motion.div
@@ -75,15 +92,15 @@ export default function Translation({
       transition={{ duration: 0.6 }}
       className="w-[400px] bg-[#E7DECD] rounded-xl flex flex-col"
     >
-      <div className="flex justify-between relative">
+      <div className="flex justify-between">
         <motion.div
           animate={{ transition: { duration: 1 } }}
-          className={`text-[14px] text-white bg-[#677DB7] rounded-tl-lg ${show && "rounded-br-md"} p-1.5 ${mplus.className} font-medium`}
+          className={`text-[14px] text-white bg-[#677DB7] rounded-tl-lg ${show ? "rounded-br-md" : "rounded-bl-md"} p-1.5 ${mplus.className} font-medium`}
         >
           {translator}
         </motion.div>
         <button
-          className={`bg-[#677DB7] ${show ? "rounded-bl-md " : "rounded-br-lg"} rounded-tr-lg p-2 hover:bg-[#677DB7]/90`}
+          className={`bg-[#677DB7] rounded-tr-lg ${show ? "rounded-bl-md" : "rounded-br-lg"} p-2 hover:bg-[#677DB7]/90`}
           onClick={() => setShow(!show)}
         >
           <motion.div animate={{ rotate: show ? 90 : 0 }}>
@@ -105,8 +122,10 @@ export default function Translation({
             initial="initial"
             animate="enter"
             exit="exit"
+            onAnimationComplete={addPadding}
           >
             <motion.div
+              ref={scope}
               variants={textAnimation}
               initial="initial"
               animate="enter"

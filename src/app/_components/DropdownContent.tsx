@@ -16,11 +16,11 @@ export default function DropdownContent({ activeLang, setLanguage }: Props) {
     enter: {
       opacity: 1,
       height: "100%",
-      transition: { duration: 0.2 },
+      transition: { duration: 0.3 },
     },
     exit: {
       opacity: 0,
-      height: "50%",
+      height: "25%",
       transition: { duration: 0.2 },
     },
   };
@@ -32,8 +32,9 @@ export default function DropdownContent({ activeLang, setLanguage }: Props) {
       animate="enter"
       className="absolute w-full max-h-[350px] shadow-xl bg-[#E7DECD] rounded-bl-xl rounded-br-xl z-10 overflow-hidden"
     >
-      <div
+      <motion.div
         className={`grid grid-cols-3 gap-y-1 gap-x-1 ${lato.className} text-base p-2 overflow-y-scroll h-full`}
+        exit={{ opacity: 0, transition: { duration: 0.1 } }}
       >
         {Object.keys(languages).map((lang) => (
           <div
@@ -44,7 +45,7 @@ export default function DropdownContent({ activeLang, setLanguage }: Props) {
             {languages[lang]}
           </div>
         ))}
-      </div>
+      </motion.div>
     </motion.div>
   );
 }
