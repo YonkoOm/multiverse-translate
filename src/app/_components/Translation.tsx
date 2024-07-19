@@ -35,11 +35,14 @@ export default function Translation({
     },
     enter: {
       height: text.length < 100 ? "125px" : "auto",
-      transition: { duration: 0.3, ease: "easeInOut" },
+      transition: {
+        duration: text.length < 100 ? 0.15 : 0.2,
+        ease: "easeInOut",
+      },
     },
     exit: {
       height: "0px",
-      transition: { duration: 0.25 },
+      transition: { duration: text.length < 100 ? 0.15 : 0.2 },
     },
   };
 
@@ -50,9 +53,8 @@ export default function Translation({
     enter: {
       opacity: 1,
       transition: {
-        duration: 0.1,
-        delay: 0.2,
-        ease: "easeInOut",
+        duration: 0.2,
+        delay: text.length < 100 ? 0.15 : 0.2,
       },
     },
     exit: {
@@ -76,17 +78,16 @@ export default function Translation({
       initial="initial"
       animate="enter"
       transition={{ duration: 0.5 }}
-      className="w-[400px] bg-[#E7DECD] rounded-xl flex flex-col"
+      className="w-[400px] bg-[#E7DECD] rounded-lg"
     >
       <div className="flex justify-between">
         <motion.div
-          animate={{ transition: { duration: 1 } }}
-          className={`text-[14px] text-white bg-[#677DB7] rounded-tl-lg ${show ? "rounded-br-md" : "rounded-bl-md"} p-1.5 ${mplus.className} font-medium`}
+          className={`text-[14px] text-white bg-[#677DB7] rounded-tl-lg ${show ? "rounded-br-md" : "rounded-bl-md"} transition-all duration-1000 p-1.5 ${mplus.className} font-medium`}
         >
           {translator}
         </motion.div>
         <button
-          className={`bg-[#677DB7] rounded-tr-lg ${show ? "rounded-bl-md" : "rounded-br-lg"} p-2 hover:bg-[#677DB7]/90`}
+          className={`bg-[#677DB7] rounded-tr-lg ${show ? "rounded-bl-md" : "rounded-br-lg"} transition-all duration-1000 p-2 hover:bg-[#677DB7]/90`}
           onClick={() => setShow(!show)}
         >
           <motion.div animate={{ rotate: show ? 90 : 0 }}>
