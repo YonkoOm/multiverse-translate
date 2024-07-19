@@ -10,7 +10,7 @@ export type Translation = {
   text: string;
 };
 
-export default function Home() {
+const Home = () => {
   const [translations, setTranslations] = useState<Translation[]>([]);
   const [fromLang, setFromLang] = useState("EN");
   const [toLang, setToLang] = useState("EN");
@@ -93,4 +93,6 @@ export default function Home() {
       <TranslationList translations={translations} fontSize={listFontSize} />
     </div>
   );
-}
+};
+
+export default Home;

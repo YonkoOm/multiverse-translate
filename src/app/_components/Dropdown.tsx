@@ -12,12 +12,7 @@ type Props = {
   setToLang: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export default function Dropdown({
-  fromLang,
-  toLang,
-  setFromLang,
-  setToLang,
-}: Props) {
+const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
   const [fromLangDropIsOpen, setFromLangDropIsOpen] = useState(false);
   const [toLangDropIsOpen, setToLangDropIsOpen] = useState(false);
   const [count, setCount] = useState(0); // solution to fix key issue with AnimatePresence when quickly exiting and entering the component
@@ -97,4 +92,6 @@ export default function Dropdown({
       </AnimatePresence>
     </div>
   );
-}
+};
+
+export default Dropdown;

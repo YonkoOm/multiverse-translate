@@ -7,7 +7,7 @@ type Props = {
   setLanguage: (lang: string) => void;
 };
 
-export default function DropdownContent({ activeLang, setLanguage }: Props) {
+const DropdownContent = ({ activeLang, setLanguage }: Props) => {
   const dropdownAnimation: Variants = {
     initial: {
       opacity: 0,
@@ -48,4 +48,6 @@ export default function DropdownContent({ activeLang, setLanguage }: Props) {
       </motion.div>
     </motion.div>
   );
-}
+};
+
+export default DropdownContent;

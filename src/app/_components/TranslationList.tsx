@@ -6,7 +6,7 @@ type Props = {
   fontSize: number;
 };
 
-export default function TranslationList({ translations, fontSize }: Props) {
+const TranslationList = ({ translations, fontSize }: Props) => {
   return (
     <div className="text-black gap-3 flex flex-col" style={{ fontSize }}>
       {translations.map((translation, i) => (
@@ -20,4 +20,6 @@ export default function TranslationList({ translations, fontSize }: Props) {
       ))}
     </div>
   );
-}
+};
+
+export default TranslationList;

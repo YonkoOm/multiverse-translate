@@ -8,12 +8,12 @@ type Props = {
   setFormFontSize: React.Dispatch<React.SetStateAction<number>>;
 };
 
-export default function TranslationForm({
+const TranslationForm = ({
   translate,
   inputContainerRef,
   translationChanged,
   setFormFontSize,
-}: Props) {
+}: Props) => {
   const [text, setText] = useState("");
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -72,4 +72,6 @@ export default function TranslationForm({
       </button>
     </form>
   );
-}
+};
+
+export default TranslationForm;
