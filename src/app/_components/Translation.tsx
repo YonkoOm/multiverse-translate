@@ -77,12 +77,22 @@ const Translation = ({ translator, text, fontSize, itemIndex }: Props) => {
     >
       <div className="flex justify-between">
         <motion.div
-          className={`text-[14px] text-white bg-[#677DB7] rounded-tl-lg ${show ? "rounded-br-md" : "rounded-bl-md"} transition-[border-bottom-right-radius_border-bottom-left-radius] duration-1000 p-1.5 ${mplus.className} font-medium`}
+          animate={{
+            borderBottomRightRadius: show ? 6 : 0,
+            borderBottomLeftRadius: !show ? 8 : 0,
+            transition: { duration: 1, delay: 0.1 },
+          }}
+          className={`text-[14px] text-white bg-[#677DB7] rounded-tl-lg p-1.5 ${mplus.className} font-medium`}
         >
           {translator}
         </motion.div>
-        <button
-          className={`bg-[#677DB7] rounded-tr-lg ${show ? "rounded-bl-md" : "rounded-br-lg"} transition-[border-bottom-right-radius_border-bottom-left-radius] duration-1000 p-2 hover:bg-[#677DB7]/90`}
+        <motion.button
+          animate={{
+            borderBottomLeftRadius: show ? 6 : 0,
+            borderBottomRightRadius: !show ? 8 : 0,
+            transition: { duration: 1, delay: 0.1 },
+          }}
+          className={`bg-[#677DB7] rounded-tr-lg p-2 hover:bg-[#677DB7]/90`}
           onClick={() => setShow(!show)}
         >
           <motion.div animate={{ rotate: show ? 90 : 0 }}>
@@ -93,7 +103,7 @@ const Translation = ({ translator, text, fontSize, itemIndex }: Props) => {
               height={16}
             />
           </motion.div>
-        </button>
+        </motion.button>
       </div>
       <AnimatePresence>
         {show && (
