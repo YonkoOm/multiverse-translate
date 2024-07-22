@@ -8,6 +8,7 @@ import TranslationForm from "./_components/TranslationForm";
 export type Translation = {
   translator: string;
   text: string;
+  succeeded: boolean;
 };
 
 const Home = () => {
@@ -30,9 +31,10 @@ const Home = () => {
     translationChanged.current = true;
   }, [fromLang, toLang]);
 
-  const translate = async (text: string) => {
-    // TODO: add alert
-    if (!translationChanged.current || text.trim() == "") return;
+  const translate = async (textToTranslate: string) => {
+    const text = textToTranslate.trim();
+
+    if (!translationChanged.current || text === "") return;
     setListFontSize(formFontSize);
 
     setTranslations([]);
@@ -47,7 +49,10 @@ const Home = () => {
         body: JSON.stringify({ text, fromLang, toLang }),
       });
 
-      if (res.status == 400) {
+      if (res.status === 400) {
+        const body = await res.json();
+        console.error(body.error);
+        translationChanged.current = true;
         return;
       } else if (!res.ok) {
         const body = await res.json();
@@ -56,15 +61,17 @@ const Home = () => {
           {
             translator: api.name,
             text: body.error,
+            succeeded: false,
           },
         ]);
+        translationChanged.current = true;
         return;
       }
 
       const { translatedText }: { translatedText: string } = await res.json();
       setTranslations((prevTranslatedData) => [
         ...prevTranslatedData,
-        { translator: api.name, text: translatedText },
+        { translator: api.name, text: translatedText, succeeded: true },
       ]);
     });
   };

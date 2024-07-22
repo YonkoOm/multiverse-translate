@@ -10,7 +10,7 @@ export async function POST(req: Request) {
   const srcLang = supportedLanguages[fromLang] || "";
   const targetLang = supportedLanguages[toLang] || "";
 
-  if (srcLang == targetLang) {
+  if (srcLang === targetLang) {
     return Response.json(
       { error: "Cannot translate the same language 🙃" },
       { status: 400 },
@@ -67,7 +67,10 @@ export async function POST(req: Request) {
   } catch (e) {
     console.error((e as Error).message);
     return Response.json(
-      { error: "translation failed 😭... try again!" },
+      {
+        error:
+          "Translation failed. Please try again. If the issue persists, please try again later",
+      },
       { status: 500 },
     );
   }

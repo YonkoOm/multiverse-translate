@@ -12,8 +12,7 @@ const TranslationList = ({ translations, fontSize }: Props) => {
       {translations.map((translation, i) => (
         <Translation
           key={translation.translator}
-          translator={translation.translator}
-          text={translation.text}
+          translation={translation}
           itemIndex={i}
           fontSize={fontSize}
         />

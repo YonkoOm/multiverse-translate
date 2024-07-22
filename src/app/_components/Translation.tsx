@@ -2,16 +2,17 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion, Variants } from "framer-motion";
 import { mplus, lato } from "../fonts";
+import { Translation as TranslationType } from "../page";
 
 type Props = {
-  translator: string;
-  text: string;
+  translation: TranslationType;
   fontSize: number;
   itemIndex: number;
 };
 
-const Translation = ({ translator, text, fontSize, itemIndex }: Props) => {
+const Translation = ({ translation, fontSize, itemIndex }: Props) => {
   const [show, setShow] = useState(false);
+  const { translator, text, succeeded } = translation;
 
   const translationAnimation: Variants = {
     initial: {
@@ -66,7 +67,6 @@ const Translation = ({ translator, text, fontSize, itemIndex }: Props) => {
     return () => clearTimeout(showTimeout);
   }, [text.length, itemIndex]);
 
-  // NOTE: look into how the opening the animation moves the others smoothly
   return (
     <motion.div
       layout
@@ -109,7 +109,7 @@ const Translation = ({ translator, text, fontSize, itemIndex }: Props) => {
       <AnimatePresence>
         {show && (
           <motion.div
-            className={`text-[${fontSize}px] flex justify-center items-center ${lato.className}`}
+            className={`${succeeded ? `text-[${fontSize}px]` : "text-xl"} flex justify-center items-center ${lato.className}`}
             key={translator}
             variants={textContainerAnimation}
             initial="initial"

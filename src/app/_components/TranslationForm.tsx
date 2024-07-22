@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { mplus, lato } from "../fonts";
 
 type Props = {
-  translate: (text: string) => Promise<void>;
+  translate: (textToTranslate: string) => Promise<void>;
   inputContainerRef: React.RefObject<HTMLDivElement>;
   translationChanged: React.MutableRefObject<boolean>;
   setFormFontSize: React.Dispatch<React.SetStateAction<number>>;
@@ -18,7 +18,7 @@ const TranslationForm = ({
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   const checkEnterPress = (e: React.KeyboardEvent<HTMLFormElement>) => {
-    if (e.key == "Enter" && !e.shiftKey) handleTranslation(e);
+    if (e.key === "Enter" && !e.shiftKey) handleTranslation(e);
   };
 
   const handleTranslation = (e: React.FormEvent<HTMLFormElement>) => {

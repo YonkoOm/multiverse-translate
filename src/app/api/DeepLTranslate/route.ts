@@ -80,6 +80,9 @@ export async function POST(req: Request) {
     const res = await fetch(API_TRANSLATE, reqOptions);
 
     if (!res.ok) {
+      if (res.status == 529) {
+        return Response.json({ error: res.statusText }, { status: res.status });
+      }
       throw new Error(
         `Failed to Translate with Status Code: ${res.status} (${res.statusText})`,
       );
@@ -90,10 +93,13 @@ export async function POST(req: Request) {
     const results: string[] = translatedText.split("\n");
 
     return Response.json({ translatedText: results[0] });
-  } catch (e) {
-    console.error((e as Error).message);
+  } catch (e: any) {
+    console.error(e.message);
     return Response.json(
-      { error: "translation failed 😭... try again!" },
+      {
+        error:
+          "Translation failed. Please try again. If the issue persists, please try again later",
+      },
       { status: 500 },
     );
   }
