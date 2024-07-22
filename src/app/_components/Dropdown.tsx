@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { languages } from "../_utils/languages";
@@ -40,8 +40,8 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
       <div
         className={`flex flex-row w-full justify-between ${mplus.className} text-base items-center`}
         onBlur={() => {
-          setFromLangDropIsOpen(false);
-          setToLangDropIsOpen(false);
+          if (fromLangDropIsOpen) setFromLangDropIsOpen(false);
+          if (toLangDropIsOpen) setToLangDropIsOpen(false);
         }}
       >
         <button
