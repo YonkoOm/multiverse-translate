@@ -64,7 +64,9 @@ const Translation = ({ translation, fontSize, itemIndex }: Props) => {
       if (text.length < 100 || itemIndex === 0) setShow(true);
     }, 750);
 
-    return () => clearTimeout(showTimeout);
+    return () => {
+      clearTimeout(showTimeout);
+    };
   }, [text.length, itemIndex]);
 
   return (

@@ -77,7 +77,7 @@ const Home = () => {
   };
 
   return (
-    <div className="w-full h-screen flex flex-col md:flex-row gap-24 justify-center items-center">
+    <div className="w-full min-h-screen flex flex-col md:flex-row gap-24 justify-center items-center overflow-auto top-[]">
       <motion.div
         layout
         ref={inputContainerRef}
