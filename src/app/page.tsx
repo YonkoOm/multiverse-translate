@@ -1,9 +1,9 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 import Dropdown from "./_components/Dropdown";
 import TranslationList from "./_components/TranslationList";
 import TranslationForm from "./_components/TranslationForm";
-import { motion } from "framer-motion";
 
 export type Translation = {
   translator: string;
@@ -70,7 +70,7 @@ const Home = () => {
   };
 
   return (
-    <div className="w-full min-h-screen flex flex-col md:flex-row gap-24 justify-center items-center">
+    <div className="w-full h-screen flex flex-col md:flex-row gap-24 justify-center items-center">
       <motion.div
         layout
         ref={inputContainerRef}

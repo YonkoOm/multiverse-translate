@@ -1,6 +1,6 @@
+import { motion, Variants } from "framer-motion";
 import { languages } from "../_utils/languages";
 import { lato } from "../fonts";
-import { motion, Variants } from "framer-motion";
 
 type Props = {
   activeLang: string;

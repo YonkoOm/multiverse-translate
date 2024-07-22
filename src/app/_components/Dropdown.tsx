@@ -1,8 +1,8 @@
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { languages } from "../_utils/languages";
 import { mplus } from "../fonts";
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import DropdownContent from "./DropdownContent";
 
 type Props = {
@@ -15,7 +15,7 @@ type Props = {
 const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
   const [fromLangDropIsOpen, setFromLangDropIsOpen] = useState(false);
   const [toLangDropIsOpen, setToLangDropIsOpen] = useState(false);
-  const [count, setCount] = useState(0); // solution to fix key issue with AnimatePresence when quickly exiting and entering the component
+  const [count, setCount] = useState(0); // used as a solution to fix key issue with AnimatePresence when quickly exiting and entering the component
 
   const switchLang = () => {
     if (toLang != fromLang) {

@@ -1,9 +1,9 @@
 import { supportedLanguages } from "../_utils/ReversoSupportedLanguages";
 
 export async function POST(req: Request) {
+  const API_TRANSLATE = "https://api.reverso.net/translate/v1/translation";
   const USER_AGENT =
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0";
-  const API_TRANSLATE = "https://api.reverso.net/translate/v1/translation";
 
   const { text, fromLang, toLang } = await req.json();
 
