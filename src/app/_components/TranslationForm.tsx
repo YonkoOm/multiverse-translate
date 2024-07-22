@@ -26,6 +26,11 @@ const TranslationForm = ({
     translate(text);
   };
 
+  const handleText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setText(e.target.value);
+    translationChanged.current = true;
+  };
+
   useEffect(() => {
     const textArea = textAreaRef.current;
     if (textArea === null) return;
@@ -55,13 +60,11 @@ const TranslationForm = ({
       className="flex flex-col flex-1"
     >
       <textarea
+        maxLength={5000}
         ref={textAreaRef}
         placeholder="hit enter or press translate to query. `Shift + Enter` for new line"
         value={text}
-        onChange={(e) => {
-          setText(e.target.value);
-          translationChanged.current = true;
-        }}
+        onChange={handleText}
         className={`outline-none resize-none text-black w-full h-full p-5 pt-2 placeholder-slate-500 bg-inherit overflow-hidden ${lato.className} placeholder:text-2xl`}
       />
       <button
