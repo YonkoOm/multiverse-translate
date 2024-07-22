@@ -1,13 +1,17 @@
 import { motion, Variants } from "framer-motion";
 import { languages } from "../_utils/languages";
 import { lato } from "../fonts";
+import { useEffect, useRef } from "react";
 
 type Props = {
   activeLang: string;
   setLanguage: (lang: string) => void;
+  closeDropdown: (e: MouseEvent, ref: React.RefObject<HTMLDivElement>) => void;
 };
 
-const DropdownContent = ({ activeLang, setLanguage }: Props) => {
+const DropdownContent = ({ activeLang, setLanguage, closeDropdown }: Props) => {
+  const contentRef = useRef<HTMLDivElement>(null);
+
   const dropdownAnimation: Variants = {
     initial: {
       opacity: 0,
@@ -24,8 +28,21 @@ const DropdownContent = ({ activeLang, setLanguage }: Props) => {
       transition: { duration: 0.2 },
     },
   };
+
+  useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent) => {
+      closeDropdown(e, contentRef);
+    };
+
+    document.addEventListener("click", handleOutsideClick);
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, [closeDropdown]);
+
   return (
     <motion.div
+      ref={contentRef}
       variants={dropdownAnimation}
       initial="initial"
       exit="exit"

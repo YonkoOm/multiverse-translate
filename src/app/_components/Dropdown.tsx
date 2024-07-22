@@ -35,14 +35,22 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
     }
   };
 
+  const closeDropdown = (
+    event: MouseEvent,
+    ref: React.RefObject<HTMLDivElement>,
+  ) => {
+    if (!ref.current) return;
+
+    if (!ref.current.contains(event.target as Node)) {
+      if (fromLangDropIsOpen) setFromLangDropIsOpen(false);
+      if (toLangDropIsOpen) setToLangDropIsOpen(false);
+    }
+  };
+
   return (
     <div>
       <div
         className={`flex flex-row w-full justify-between ${mplus.className} text-base items-center`}
-        onBlur={() => {
-          if (fromLangDropIsOpen) setFromLangDropIsOpen(false);
-          if (toLangDropIsOpen) setToLangDropIsOpen(false);
-        }}
       >
         <button
           className="text-white flex gap-x-[6px] bg-[#677DB7] hover:bg-[#677DB7]/90 p-3 rounded-tl-xl font-bold items-center justify-center"
@@ -86,11 +94,12 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
         </button>
       </div>
       <AnimatePresence mode="wait">
-        {(fromLangDropIsOpen || toLangDropIsOpen) && (
+        {fromLangDropIsOpen !== toLangDropIsOpen && (
           <DropdownContent
             key={count}
             activeLang={fromLangDropIsOpen ? fromLang : toLang}
             setLanguage={setLanguage}
+            closeDropdown={closeDropdown}
           />
         )}
       </AnimatePresence>
