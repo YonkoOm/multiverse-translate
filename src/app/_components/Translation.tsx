@@ -55,7 +55,7 @@ const Translation = ({ translation, fontSize, itemIndex }: Props) => {
     },
     exit: {
       opacity: 0,
-      transition: { duration: 0.1 },
+      transition: { duration: 0.05 },
     },
   };
 

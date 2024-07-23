@@ -60,7 +60,7 @@ const TranslationForm = ({
       className="flex flex-col flex-1"
     >
       <textarea
-        maxLength={5000}
+        maxLength={3000}
         ref={textAreaRef}
         placeholder="hit enter or press translate to query. `Shift + Enter` for new line"
         value={text}

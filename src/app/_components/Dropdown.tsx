@@ -35,7 +35,7 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
     }
   };
 
-  const closeDropdown = (
+  const handleOutsideClick = (
     event: MouseEvent,
     ref: React.RefObject<HTMLDivElement>,
   ) => {
@@ -99,7 +99,7 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
             key={count}
             activeLang={fromLangDropIsOpen ? fromLang : toLang}
             setLanguage={setLanguage}
-            closeDropdown={closeDropdown}
+            handleOutsideClick={handleOutsideClick}
           />
         )}
       </AnimatePresence>

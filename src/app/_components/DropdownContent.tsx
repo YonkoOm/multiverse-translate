@@ -6,10 +6,17 @@ import { useEffect, useRef } from "react";
 type Props = {
   activeLang: string;
   setLanguage: (lang: string) => void;
-  closeDropdown: (e: MouseEvent, ref: React.RefObject<HTMLDivElement>) => void;
+  handleOutsideClick: (
+    e: MouseEvent,
+    ref: React.RefObject<HTMLDivElement>,
+  ) => void;
 };
 
-const DropdownContent = ({ activeLang, setLanguage, closeDropdown }: Props) => {
+const DropdownContent = ({
+  activeLang,
+  setLanguage,
+  handleOutsideClick,
+}: Props) => {
   const contentRef = useRef<HTMLDivElement>(null);
 
   const dropdownAnimation: Variants = {
@@ -30,15 +37,15 @@ const DropdownContent = ({ activeLang, setLanguage, closeDropdown }: Props) => {
   };
 
   useEffect(() => {
-    const handleOutsideClick = (e: MouseEvent) => {
-      closeDropdown(e, contentRef);
+    const handleClick = (e: MouseEvent) => {
+      handleOutsideClick(e, contentRef);
     };
 
-    document.addEventListener("click", handleOutsideClick);
+    document.addEventListener("click", handleClick);
     return () => {
-      document.removeEventListener("click", handleOutsideClick);
+      document.removeEventListener("click", handleClick);
     };
-  }, [closeDropdown]);
+  }, [handleOutsideClick]);
 
   return (
     <motion.div
