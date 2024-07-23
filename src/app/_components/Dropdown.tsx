@@ -50,17 +50,17 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
   return (
     <div>
       <div
-        className={`relative items-stretch flex flex-row w-full justify-between xl:items-center ${mplus.className} text-sm md:text-base items-center`}
+        className={`relative items-stretch flex flex-row w-full justify-between lg:items-center ${mplus.className} text-sm md:text-base items-center`}
       >
         <button
-          className="text-white flex flex-1 xl:flex-initial gap-x-[6px] bg-[#677DB7] hover:bg-[#677DB7]/90 p-3 rounded-tl-xl font-bold items-center justify-center"
+          className="text-white flex flex-1 lg:flex-initial gap-x-2 bg-[#677DB7] hover:bg-[#677DB7]/90 px-3 lg:py-3 rounded-tl-xl font-bold items-center justify-center"
           onClick={() => {
             if (toLangDropIsOpen) setToLangDropIsOpen(false);
             setFromLangDropIsOpen(!fromLangDropIsOpen);
             setCount(count + 1);
           }}
         >
-          <div>{languages[fromLang]}</div>
+          <div className="max-[480px]:flex-1">{languages[fromLang]}</div>
           <motion.div
             className="w-[14px] h-[14px] relative flex-none"
             animate={{ rotate: fromLangDropIsOpen ? 180 : 0 }}
@@ -69,7 +69,7 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
           </motion.div>
         </button>
         <button
-          className="mx-auto xl:absolute xl:left-1/2 xl:-translate-x-1/2 hover:bg-[#677DB7]/20 rounded-lg"
+          className="mx-auto lg:absolute lg:left-1/2 lg:-translate-x-1/2 hover:bg-[#677DB7]/20 rounded-lg"
           onClick={switchLang}
         >
           <div className="w-10 h-10 relative">
@@ -77,14 +77,14 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
           </div>
         </button>
         <button
-          className="text-white flex flex-1 xl:flex-initial gap-x-2 bg-[#677DB7] hover:bg-[#677DB7]/90 p-3 rounded-tr-xl font-bold items-center justify-center"
+          className="text-white flex flex-1 lg:flex-initial gap-x-2 bg-[#677DB7] hover:bg-[#677DB7]/90 px-3 lg:p-3 rounded-tr-xl font-bold items-center justify-center"
           onClick={() => {
             if (fromLangDropIsOpen) setFromLangDropIsOpen(false);
             setToLangDropIsOpen(!toLangDropIsOpen);
             setCount(count + 1);
           }}
         >
-          <div>{languages[toLang]}</div>
+          <div className="max-[480px]:flex-1">{languages[toLang]}</div>
           <motion.div
             className="w-[14px] h-[14px] relative flex-none"
             animate={{ rotate: toLangDropIsOpen ? 180 : 0 }}
