@@ -50,10 +50,10 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
   return (
     <div>
       <div
-        className={`flex flex-row w-full justify-between ${mplus.className} text-base items-center`}
+        className={`relative items-stretch flex flex-row w-full justify-between ${mplus.className} text-base items-center`}
       >
         <button
-          className="text-white flex gap-x-[6px] bg-[#677DB7] hover:bg-[#677DB7]/90 p-3 rounded-tl-xl font-bold items-center justify-center"
+          className="text-white flex flex-1 lg:flex-initial gap-x-[6px] bg-[#677DB7] hover:bg-[#677DB7]/90 p-3 rounded-tl-xl font-bold items-center justify-center"
           onClick={() => {
             if (toLangDropIsOpen) setToLangDropIsOpen(false);
             setFromLangDropIsOpen(!fromLangDropIsOpen);
@@ -69,7 +69,7 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
           </motion.div>
         </button>
         <button
-          className="absolute left-[50%] translate-x-[-50%] hover:bg-[#677DB7]/20 rounded-lg"
+          className="mx-auto xl:absolute xl:left-1/2 xl:-translate-x-1/2 hover:bg-[#677DB7]/20 rounded-lg"
           onClick={switchLang}
         >
           <div className="w-10 h-10 relative">
@@ -77,7 +77,7 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
           </div>
         </button>
         <button
-          className="text-white flex gap-x-[6px] bg-[#677DB7] hover:bg-[#677DB7]/90 p-3 rounded-tr-xl font-bold items-center justify-center"
+          className="text-white flex flex-1 lg:flex-initial gap-x-[6px] bg-[#677DB7] hover:bg-[#677DB7]/90 p-3 rounded-tr-xl font-bold items-center justify-center"
           onClick={() => {
             if (fromLangDropIsOpen) setFromLangDropIsOpen(false);
             setToLangDropIsOpen(!toLangDropIsOpen);

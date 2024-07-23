@@ -8,16 +8,21 @@ type Props = {
 
 const TranslationList = ({ translations, fontSize }: Props) => {
   return (
-    <div className="text-black gap-3 flex flex-col" style={{ fontSize }}>
-      {translations.map((translation, i) => (
-        <Translation
-          key={translation.translator}
-          translation={translation}
-          itemIndex={i}
-          fontSize={fontSize}
-        />
-      ))}
-    </div>
+    translations.length > 0 && (
+      <div
+        className="text-black gap-3 flex flex-col w-[300px] md:w-[400px] lg:w-[500px]"
+        style={{ fontSize }}
+      >
+        {translations.map((translation, i) => (
+          <Translation
+            key={translation.translator}
+            translation={translation}
+            itemIndex={i}
+            fontSize={fontSize}
+          />
+        ))}
+      </div>
+    )
   );
 };
 

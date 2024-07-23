@@ -76,7 +76,7 @@ const Translation = ({ translation, fontSize, itemIndex }: Props) => {
       initial="initial"
       animate="enter"
       transition={{ duration: 0.5 }}
-      className="w-[400px] bg-[#E7DECD] rounded-lg"
+      className="bg-[#E7DECD] rounded-lg flex flex-col flex-1"
     >
       <div className="flex justify-between">
         <motion.div
