@@ -10,7 +10,7 @@ const TranslationList = ({ translations, fontSize }: Props) => {
   return (
     translations.length > 0 && (
       <div
-        className="text-black gap-3 flex flex-col w-[300px] md:w-[400px] lg:w-[500px]"
+        className="text-black gap-3 flex flex-col w-4/5 sm:w-[425px] md:w-[450px]"
         style={{ fontSize }}
       >
         {translations.map((translation, i) => (

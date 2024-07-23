@@ -65,7 +65,7 @@ const TranslationForm = ({
         placeholder="hit enter or press translate to query. `Shift + Enter` for new line"
         value={text}
         onChange={handleText}
-        className={`outline-none resize-none text-black w-full h-full p-5 pt-2 placeholder-slate-500 bg-inherit overflow-hidden ${lato.className} placeholder:text-2xl`}
+        className={`outline-none resize-none text-black w-full h-full p-5 pt-2 placeholder-slate-500 bg-inherit overflow-hidden ${lato.className} placeholder:text-xl lg:placeholder:text-2xl`}
       />
       <button
         type="submit"

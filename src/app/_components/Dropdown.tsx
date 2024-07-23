@@ -50,10 +50,10 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
   return (
     <div>
       <div
-        className={`relative items-stretch flex flex-row w-full justify-between ${mplus.className} text-base items-center`}
+        className={`relative items-stretch flex flex-row w-full justify-between xl:items-center ${mplus.className} text-sm md:text-base items-center`}
       >
         <button
-          className="text-white flex flex-1 lg:flex-initial gap-x-[6px] bg-[#677DB7] hover:bg-[#677DB7]/90 p-3 rounded-tl-xl font-bold items-center justify-center"
+          className="text-white flex flex-1 xl:flex-initial gap-x-[6px] bg-[#677DB7] hover:bg-[#677DB7]/90 p-3 rounded-tl-xl font-bold items-center justify-center"
           onClick={() => {
             if (toLangDropIsOpen) setToLangDropIsOpen(false);
             setFromLangDropIsOpen(!fromLangDropIsOpen);
@@ -62,7 +62,7 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
         >
           <div>{languages[fromLang]}</div>
           <motion.div
-            className="w-[14px] h-[14px] relative"
+            className="w-[14px] h-[14px] relative flex-none"
             animate={{ rotate: fromLangDropIsOpen ? 180 : 0 }}
           >
             <Image src="/down-chevron.svg" alt="down-chevron" fill />
@@ -77,7 +77,7 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
           </div>
         </button>
         <button
-          className="text-white flex flex-1 lg:flex-initial gap-x-[6px] bg-[#677DB7] hover:bg-[#677DB7]/90 p-3 rounded-tr-xl font-bold items-center justify-center"
+          className="text-white flex flex-1 xl:flex-initial gap-x-2 bg-[#677DB7] hover:bg-[#677DB7]/90 p-3 rounded-tr-xl font-bold items-center justify-center"
           onClick={() => {
             if (fromLangDropIsOpen) setFromLangDropIsOpen(false);
             setToLangDropIsOpen(!toLangDropIsOpen);
@@ -86,7 +86,7 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
         >
           <div>{languages[toLang]}</div>
           <motion.div
-            className="w-[14px] h-[14px] relative"
+            className="w-[14px] h-[14px] relative flex-none"
             animate={{ rotate: toLangDropIsOpen ? 180 : 0 }}
           >
             <Image src="/down-chevron.svg" alt="down-chevron" fill />
