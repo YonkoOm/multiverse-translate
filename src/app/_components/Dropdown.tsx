@@ -50,7 +50,7 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
   return (
     <div>
       <div
-        className={`relative items-stretch flex flex-row w-full justify-between lg:items-center ${mplus.className} text-sm md:text-base items-center`}
+        className={`relative items-stretch flex flex-row w-full justify-between lg:items-center ${mplus.className} text-sm md:text-base`}
       >
         <button
           className="text-white flex flex-1 lg:flex-initial gap-x-2 bg-[#677DB7] hover:bg-[#677DB7]/90 px-3 lg:py-3 rounded-tl-xl font-bold items-center justify-center"
