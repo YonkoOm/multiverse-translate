@@ -73,3 +73,10 @@ export const languages: { [key: string]: string } = {
   ZHT: "Chinese Traditional",
   ZU: "Zulu",
 };
+
+export const sortedLanguages = Object.keys(languages)
+  .map((lang) => ({
+    code: lang,
+    language: languages[lang],
+  }))
+  .sort((lang1, lang2) => (lang1.language < lang2.language ? -1 : 1));

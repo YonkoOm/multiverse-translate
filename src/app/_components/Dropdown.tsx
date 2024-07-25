@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
 import { languages } from "../_utils/languages";
 import { mplus } from "../fonts";
 import DropdownContent from "./DropdownContent";
+import Image from "next/image";
 
 type Props = {
   fromLang: string;
@@ -50,10 +50,10 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
   return (
     <div>
       <div
-        className={`relative items-stretch flex flex-row w-full justify-between lg:items-center ${mplus.className} text-sm md:text-base`}
+        className={`relative items-stretch flex flex-row w-full justify-between sm:items-center ${mplus.className} text-sm md:text-base`}
       >
         <button
-          className="text-white flex flex-1 lg:flex-initial gap-x-2 bg-[#677DB7] hover:bg-[#677DB7]/90 px-3 lg:py-3 rounded-tl-xl font-bold items-center justify-center"
+          className="text-white flex flex-1 sm:flex-initial gap-x-2 bg-[#677DB7] hover:bg-[#677DB7]/90 px-3 sm:py-3 rounded-tl-xl font-bold items-center justify-center"
           onClick={() => {
             if (toLangDropIsOpen) setToLangDropIsOpen(false);
             setFromLangDropIsOpen(!fromLangDropIsOpen);
@@ -69,7 +69,7 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
           </motion.div>
         </button>
         <button
-          className="mx-auto lg:absolute lg:left-1/2 lg:-translate-x-1/2 hover:bg-[#677DB7]/20 rounded-lg"
+          className="mx-auto sm:absolute sm:left-1/2 sm:-translate-x-1/2 hover:bg-[#677DB7]/20 rounded-lg"
           onClick={switchLang}
         >
           <div className="w-10 h-10 relative">
@@ -77,7 +77,7 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
           </div>
         </button>
         <button
-          className="text-white flex flex-1 lg:flex-initial gap-x-2 bg-[#677DB7] hover:bg-[#677DB7]/90 px-3 lg:p-3 rounded-tr-xl font-bold items-center justify-center"
+          className="text-white flex flex-1 sm:flex-initial gap-x-2 bg-[#677DB7] hover:bg-[#677DB7]/90 px-3 sm:p-3 rounded-tr-xl font-bold items-center justify-center"
           onClick={() => {
             if (fromLangDropIsOpen) setFromLangDropIsOpen(false);
             setToLangDropIsOpen(!toLangDropIsOpen);

@@ -1,7 +1,8 @@
 import { motion, Variants } from "framer-motion";
-import { languages } from "../_utils/languages";
+import { sortedLanguages } from "../_utils/languages";
 import { lato } from "../fonts";
 import { useEffect, useRef } from "react";
+import { supportedLanguages } from "../api/_utils/BingSupportedLanguages";
 
 type Props = {
   activeLang: string;
@@ -46,14 +47,6 @@ const DropdownContent = ({
       document.removeEventListener("click", handleClick);
     };
   }, [handleOutsideClick]);
-
-  const sortedLanguages = Object.keys(languages).map((lang) => ({
-    code: lang,
-    language: languages[lang],
-  }));
-  sortedLanguages.sort((lang1, lang2) =>
-    lang1.language < lang2.language ? -1 : 1,
-  );
 
   return (
     <motion.div

@@ -71,6 +71,7 @@ const Translation = ({ translation, fontSize, itemIndex }: Props) => {
 
   return (
     <motion.div
+      layout
       variants={translationAnimation}
       initial="initial"
       animate="enter"
