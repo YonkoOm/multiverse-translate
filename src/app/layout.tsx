@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Translation",
+  title: "Multiverse Translate",
   description:
     "Translation service that queries multiple translations services all in one location for ease",
 };

@@ -1,9 +1,12 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { mplus } from "./fonts";
 import Dropdown from "./_components/Dropdown";
 import TranslationList from "./_components/TranslationList";
 import TranslationForm from "./_components/TranslationForm";
+import LoadingAnimation from "./_components/LoadingAnimation";
+import Image from "next/image";
 
 export type Translation = {
   translator: string;
@@ -17,6 +20,7 @@ const Home = () => {
   const [toLang, setToLang] = useState("EN");
   const [listFontSize, setListFontSize] = useState(26);
   const [formFontSize, setFormFontSize] = useState(26);
+  const [isLoading, setIsLoading] = useState(false);
   const inputContainerRef = useRef<HTMLDivElement>(null);
   const translationChanged = useRef(false);
 
@@ -32,6 +36,7 @@ const Home = () => {
   }, [fromLang, toLang]);
 
   const translate = async (textToTranslate: string) => {
+    setIsLoading(true);
     const text = textToTranslate.trim();
 
     if (!translationChanged.current || text === "") return;
@@ -73,30 +78,50 @@ const Home = () => {
         ...prevTranslatedData,
         { translator: api.name, text: translatedText, succeeded: true },
       ]);
+      setIsLoading(false);
     });
   };
 
   return (
-    <div className="w-full min-h-screen flex flex-col lg:flex-row gap-12 lg:justify-center items-center py-10 md:p-24">
-      <motion.div
-        ref={inputContainerRef}
-        className="relative w-4/5 sm:w-[450px] md:w-[575px] h-[400px] min-h-[400px] bg-[#E7DECD] rounded-xl flex flex-col focus-within:shadow-[0px_0px_0px_1.5px_#8F99FB]"
-      >
-        <Dropdown
-          toLang={toLang}
-          fromLang={fromLang}
-          setFromLang={setFromLang}
-          setToLang={setToLang}
-        />
-        <hr className="bg-black border-0 h-[1px]" />
-        <TranslationForm
-          translate={translate}
-          inputContainerRef={inputContainerRef}
-          translationChanged={translationChanged}
-          setFormFontSize={setFormFontSize}
-        />
-      </motion.div>
-      <TranslationList translations={translations} fontSize={listFontSize} />
+    <div className="flex flex-col w-full min-h-screen">
+      <div className="p-1 w-fit border-b border-r rounded-md border-[#E7DECD] flex items-center gap-x-2">
+        <div className="relative w-9 h-9 md:w-12 md:h-12">
+          <Image src="/icon.png" fill sizes="48px" alt="translation-logo" />
+        </div>
+        <div
+          className={`text-[#fff7ed] text-center text-xs md:text-sm font-bold ${mplus.className}`}
+        >
+          Multiverse Translate
+        </div>
+      </div>
+      <div className="flex flex-col lg:flex-row gap-12 lg:justify-center items-center flex-1 py-10 md:p-24 w-full">
+        <motion.div
+          ref={inputContainerRef}
+          className="relative w-4/5 sm:w-[500px] lg:w-[575px] h-[400px] min-h-[350px] sm:min-h-[400px] bg-[#E7DECD] rounded-xl flex flex-col focus-within:shadow-[0px_0px_0px_1.5px_#8F99FB]"
+        >
+          <Dropdown
+            toLang={toLang}
+            fromLang={fromLang}
+            setFromLang={setFromLang}
+            setToLang={setToLang}
+          />
+          <hr className="bg-black border-0 h-[1px]" />
+          <TranslationForm
+            translate={translate}
+            inputContainerRef={inputContainerRef}
+            translationChanged={translationChanged}
+            setFormFontSize={setFormFontSize}
+          />
+        </motion.div>
+        {!isLoading ? (
+          <TranslationList
+            translations={translations}
+            fontSize={listFontSize}
+          />
+        ) : (
+          <LoadingAnimation />
+        )}
+      </div>
     </div>
   );
 };

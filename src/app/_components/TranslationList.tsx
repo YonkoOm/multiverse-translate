@@ -24,7 +24,7 @@ const TranslationList = ({ translations, fontSize }: Props) => {
     </div>
   ) : (
     <div
-      className={`text-black gap-3 bg-[#E7DECD] w-4/5 text-2xl rounded-lg sm:w-[425px] md:w-[450px] h-[150px] flex justify-center items-center ${lato.className} opacity-60 text-opacity-60`}
+      className={`text-black gap-3 bg-[#E7DECD] w-4/5 text-xl sm:text-2xl rounded-lg sm:w-[425px] md:w-[450px] h-[150px] flex justify-center items-center ${lato.className} opacity-60 text-opacity-60`}
     >
       translations will appear here
     </div>
