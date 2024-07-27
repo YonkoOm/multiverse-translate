@@ -27,7 +27,7 @@ const Home = () => {
   const apis = [
     { name: "DeepL", translator: "/api/DeepLTranslate" },
     { name: "Google", translator: "/api/GoogleTranslate" },
-    { name: "Bing/Microsoft", translator: "/api/BingTranslate" },
+    { name: "Bing", translator: "/api/BingTranslate" },
     { name: "Reverso", translator: "/api/ReversoTranslate" },
   ];
 
@@ -36,14 +36,14 @@ const Home = () => {
   }, [fromLang, toLang]);
 
   const translate = async (textToTranslate: string) => {
-    setIsLoading(true);
     const text = textToTranslate.trim();
 
     if (!translationChanged.current || text === "") return;
+    setIsLoading(true);
     setListFontSize(formFontSize);
+    translationChanged.current = false;
 
     setTranslations([]);
-    translationChanged.current = false;
 
     apis.forEach(async (api) => {
       const res = await fetch(api.translator, {
@@ -84,8 +84,8 @@ const Home = () => {
 
   return (
     <div className="flex flex-col w-full min-h-screen">
-      <div className="p-1 w-fit border-b border-r rounded-md border-[#E7DECD] flex items-center gap-x-2">
-        <div className="relative w-9 h-9 md:w-12 md:h-12">
+      <div className="p-2 w-fit border-b border-r bg-[#2A3E5F]/70 rounded-br-lg rounded-tr-md border-[#E7DECD] flex items-center gap-x-2">
+        <div className="relative w-7 h-7 md:w-9 md:h-9">
           <Image src="/icon.png" fill sizes="48px" alt="translation-logo" />
         </div>
         <div
@@ -94,10 +94,10 @@ const Home = () => {
           Multiverse Translate
         </div>
       </div>
-      <div className="flex flex-col lg:flex-row gap-12 lg:justify-center items-center flex-1 py-10 md:p-24 w-full">
+      <div className="flex flex-col lg:flex-row gap-8 md:gap-12 lg:justify-center items-center flex-1 py-10 md:p-8 w-full">
         <motion.div
           ref={inputContainerRef}
-          className="relative w-4/5 sm:w-[500px] lg:w-[575px] h-[400px] min-h-[350px] sm:min-h-[400px] bg-[#E7DECD] rounded-xl flex flex-col focus-within:shadow-[0px_0px_0px_1.5px_#8F99FB]"
+          className="relative w-4/5 md:w-8/12 lg:w-[575px] h-[400px] min-h-[350px] sm:min-h-[400px] bg-[#E7DECD] rounded-xl flex flex-col focus-within:shadow-[0px_0px_0px_1.5px_#8F99FB]"
         >
           <Dropdown
             toLang={toLang}
