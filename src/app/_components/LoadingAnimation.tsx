@@ -19,9 +19,9 @@ const LoadingAnimation = () => {
       y: 0,
     },
     animate: {
-      y: 40,
+      y: 15,
       transition: {
-        duration: 0.5,
+        duration: 0.4,
         repeat: Infinity,
         repeatType: "mirror",
         ease: "easeInOut",
@@ -39,7 +39,7 @@ const LoadingAnimation = () => {
       {[...Array(3)].map((_, i) => (
         <motion.span
           key={i}
-          className="bg-[#E7DECD] w-3 h-3 rounded-3xl block"
+          className="bg-[#677DB7] w-2.5 h-2.5 rounded-3xl block"
           variants={dotVariants}
         />
       ))}

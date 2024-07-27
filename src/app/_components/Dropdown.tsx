@@ -50,7 +50,7 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
   return (
     <div>
       <div
-        className={`relative items-stretch flex flex-row w-full justify-between sm:items-center ${mplus.className} text-sm md:text-base`}
+        className={`relative flex w-full justify-between sm:items-center ${mplus.className} text-sm md:text-base`}
       >
         <button
           className="text-white flex flex-1 sm:flex-initial gap-x-2 bg-[#677DB7] hover:bg-[#677DB7]/90 px-3 sm:py-3 rounded-tl-xl font-bold items-center justify-center"
@@ -60,9 +60,9 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
             setCount(count + 1);
           }}
         >
-          <div className="max-[480px]:flex-1">{languages[fromLang]}</div>
+          <div className="flex-1">{languages[fromLang]}</div>
           <motion.div
-            className="w-[14px] h-[14px] relative flex-none"
+            className="w-[14px] h-[14px] relative"
             animate={{ rotate: fromLangDropIsOpen ? 180 : 0 }}
           >
             <Image src="/down-chevron.svg" alt="down-chevron" fill />
@@ -73,20 +73,20 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
           onClick={switchLang}
         >
           <div className="w-10 h-10 relative">
-            <Image src="/switch.png" alt="switch" fill sizes="100px" priority />
+            <Image src="/switch.png" alt="switch" sizes="40px" fill priority />
           </div>
         </button>
         <button
-          className="text-white flex flex-1 sm:flex-initial gap-x-2 bg-[#677DB7] hover:bg-[#677DB7]/90 px-3 sm:p-3 rounded-tr-xl font-bold items-center justify-center"
+          className="text-white flex flex-1 sm:flex-initial gap-x-2 bg-[#677DB7] hover:bg-[#677DB7]/90 px-3 sm:py-3 rounded-tr-xl font-bold items-center justify-center"
           onClick={() => {
             if (fromLangDropIsOpen) setFromLangDropIsOpen(false);
             setToLangDropIsOpen(!toLangDropIsOpen);
             setCount(count + 1);
           }}
         >
-          <div className="max-[480px]:flex-1">{languages[toLang]}</div>
+          <div className="flex-1">{languages[toLang]}</div>
           <motion.div
-            className="w-[14px] h-[14px] relative flex-none"
+            className="w-[14px] h-[14px] relative"
             animate={{ rotate: toLangDropIsOpen ? 180 : 0 }}
           >
             <Image src="/down-chevron.svg" alt="down-chevron" fill />
