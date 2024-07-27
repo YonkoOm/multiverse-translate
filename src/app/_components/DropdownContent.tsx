@@ -2,7 +2,6 @@ import { motion, Variants } from "framer-motion";
 import { sortedLanguages } from "../_utils/languages";
 import { lato } from "../fonts";
 import { useEffect, useRef } from "react";
-import { supportedLanguages } from "../api/_utils/BingSupportedLanguages";
 
 type Props = {
   activeLang: string;
