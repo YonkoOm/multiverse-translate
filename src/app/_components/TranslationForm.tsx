@@ -35,22 +35,30 @@ const TranslationForm = ({
     const textArea = textAreaRef.current;
     if (textArea === null) return;
 
-    if (text.length > 150 || window.innerWidth < 640) {
-      setFormFontSize(18);
-      textArea.style.fontSize = 18 + "px";
-    } else if (text.length > 50) {
-      setFormFontSize(20);
-      textArea.style.fontSize = 20 + "px";
-    } else {
-      setFormFontSize(24);
-      textArea.style.fontSize = 24 + "px";
-    }
+    const handleResize = () => {
+      if (text.length > 150 || window.innerWidth < 640) {
+        setFormFontSize(18);
+        textArea.style.fontSize = 18 + "px";
+      } else if (text.length > 50) {
+        setFormFontSize(20);
+        textArea.style.fontSize = 20 + "px";
+      } else {
+        setFormFontSize(24);
+        textArea.style.fontSize = 24 + "px";
+      }
 
-    const container = inputContainerRef.current;
-    if (container !== null) {
-      container.style.height = "auto"; // resets the "height" of texarea allowing it to shrink when removing content
-      container.style.height = `${textArea.scrollHeight + 100}px`; // set height to height of the content within textarea (that is the scrollHeight)
-    }
+      const container = inputContainerRef.current;
+      if (container !== null) {
+        container.style.height = "auto"; // resets the "height" of texarea allowing it to shrink when removing content
+        container.style.height = `${textArea.scrollHeight + 100}px`; // set height to height of the content within textarea (that is the scrollHeight)
+      }
+    };
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, [text, inputContainerRef, setFormFontSize]);
 
   return (
