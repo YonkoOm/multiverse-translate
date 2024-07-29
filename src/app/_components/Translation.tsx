@@ -30,7 +30,7 @@ const Translation = ({ translation, fontSize, itemIndex }: Props) => {
       height: "0px",
     },
     enter: {
-      height: text.length < 100 ? "125px" : "auto",
+      height: text.length < 100 ? "120px" : "auto",
       transition: {
         duration: text.length < 100 ? 0.15 : 0.2,
         ease: "easeInOut",

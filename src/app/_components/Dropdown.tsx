@@ -19,8 +19,9 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
 
   const switchLang = () => {
     if (toLang != fromLang) {
+      const fromLangTemp = fromLang;
       setFromLang(toLang);
-      setToLang(fromLang);
+      setToLang(fromLangTemp);
     }
   };
 
@@ -50,7 +51,7 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
   return (
     <div>
       <div
-        className={`relative flex w-full justify-between sm:items-center ${mplus.className} text-sm md:text-base`}
+        className={`flex w-full justify-between sm:items-center ${mplus.className} text-sm md:text-base`}
       >
         <button
           className="text-white flex flex-1 sm:flex-initial gap-x-2 bg-[#677DB7] hover:bg-[#677DB7]/90 px-3 sm:py-3 rounded-tl-xl font-bold items-center justify-center"
@@ -60,21 +61,31 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
             setCount(count + 1);
           }}
         >
-          <div className="flex-1">{languages[fromLang]}</div>
+          <div>{languages[fromLang]}</div>
           <motion.div
-            className="w-[14px] h-[14px] relative"
+            className="shrink-0"
             animate={{ rotate: fromLangDropIsOpen ? 180 : 0 }}
           >
-            <Image src="/down-chevron.svg" alt="down-chevron" fill />
+            <Image
+              src="/down-chevron.svg"
+              alt="down chevron"
+              width={14}
+              height={14}
+            />
           </motion.div>
         </button>
         <button
-          className="mx-auto sm:absolute sm:left-1/2 sm:-translate-x-1/2 hover:bg-[#677DB7]/20 rounded-lg"
+          className="mx-auto sm:absolute sm:left-1/2 sm:-translate-x-1/2 hover:bg-[#677DB7]/20 rounded-lg shrink-0"
           onClick={switchLang}
         >
-          <div className="w-10 h-10 relative">
-            <Image src="/switch.png" alt="switch" sizes="40px" fill priority />
-          </div>
+          <Image
+            src="/switch.png"
+            alt="switch languages"
+            sizes="40px"
+            width={40}
+            height={40}
+            priority
+          />
         </button>
         <button
           className="text-white flex flex-1 sm:flex-initial gap-x-2 bg-[#677DB7] hover:bg-[#677DB7]/90 px-3 sm:py-3 rounded-tr-xl font-bold items-center justify-center"
@@ -84,12 +95,22 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
             setCount(count + 1);
           }}
         >
-          <div className="flex-1">{languages[toLang]}</div>
+          <div>{languages[toLang]}</div>
           <motion.div
-            className="w-[14px] h-[14px] relative"
+            className="relative w-[14px] h-[14px] shrink-0"
             animate={{ rotate: toLangDropIsOpen ? 180 : 0 }}
           >
-            <Image src="/down-chevron.svg" alt="down-chevron" fill />
+            <motion.div
+              className="shrink-0"
+              animate={{ rotate: fromLangDropIsOpen ? 180 : 0 }}
+            >
+              <Image
+                src="/down-chevron.svg"
+                alt="down chevron"
+                width={14}
+                height={14}
+              />
+            </motion.div>
           </motion.div>
         </button>
       </div>

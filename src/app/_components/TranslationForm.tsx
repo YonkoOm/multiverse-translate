@@ -3,14 +3,12 @@ import { mplus, lato } from "../fonts";
 
 type Props = {
   translate: (textToTranslate: string) => Promise<void>;
-  inputContainerRef: React.RefObject<HTMLDivElement>;
   translationChanged: React.MutableRefObject<boolean>;
   setFormFontSize: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const TranslationForm = ({
   translate,
-  inputContainerRef,
   translationChanged,
   setFormFontSize,
 }: Props) => {
@@ -36,6 +34,7 @@ const TranslationForm = ({
     if (textArea === null) return;
 
     const handleResize = () => {
+      // handling the font size
       if (text.length > 150 || window.innerWidth < 640) {
         setFormFontSize(18);
         textArea.style.fontSize = 18 + "px";
@@ -47,11 +46,9 @@ const TranslationForm = ({
         textArea.style.fontSize = 24 + "px";
       }
 
-      const container = inputContainerRef.current;
-      if (container !== null) {
-        container.style.height = "auto"; // resets the "height" of texarea allowing it to shrink when removing content
-        container.style.height = `${textArea.scrollHeight + 100}px`; // set height to height of the content within textarea (that is the scrollHeight)
-      }
+      // dynamically resize the text area as content increases
+      textArea.style.height = "auto"; // resets the "height" of text area allowing it to shrink when removing content
+      textArea.style.height = `${textArea.scrollHeight}px`; // set height to height of the content within text area (that is the scrollHeight)
     };
     handleResize();
 
@@ -59,13 +56,13 @@ const TranslationForm = ({
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [text, inputContainerRef, setFormFontSize]);
+  }, [text, setFormFontSize]);
 
   return (
     <form
       onSubmit={handleTranslation}
       onKeyDown={checkEnterPress}
-      className="flex flex-col flex-1"
+      className="flex flex-col"
     >
       <textarea
         maxLength={3000}
@@ -73,11 +70,11 @@ const TranslationForm = ({
         placeholder="hit enter or press translate to query. `Shift + Enter` for new line"
         value={text}
         onChange={handleText}
-        className={`outline-none resize-none text-black w-full h-full p-5 pt-2 placeholder-slate-500 bg-inherit overflow-hidden ${lato.className} text-xl placeholder:text-xl lg:placeholder:text-2xl`}
+        className={`min-h-[250px] md:min-h-[350px] outline-none resize-none text-black w-full h-full p-5 pt-2 placeholder-slate-500 bg-inherit overflow-hidden ${lato.className} text-xl placeholder:text-xl lg:placeholder:text-2xl`} // min height used as we are dynamically resizing the text area based on content
       />
       <button
         type="submit"
-        className={`text-white font-bold w-fit self-end bg-[#677DB7] hover:bg-[#677DB7]/90 p-2 rounded-tl-lg rounded-br-xl ${mplus.className}`}
+        className={`self-end text-white font-bold w-fit bg-[#677DB7] hover:bg-[#677DB7]/90 p-2 rounded-tl-lg rounded-br-xl ${mplus.className}`}
       >
         Translate
       </button>

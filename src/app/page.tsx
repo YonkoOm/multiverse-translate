@@ -21,7 +21,6 @@ const Home = () => {
   const [listFontSize, setListFontSize] = useState(26);
   const [formFontSize, setFormFontSize] = useState(26);
   const [isLoading, setIsLoading] = useState(false);
-  const inputContainerRef = useRef<HTMLDivElement>(null);
   const translationChanged = useRef(false);
 
   const apis = [
@@ -95,10 +94,7 @@ const Home = () => {
         </div>
       </div>
       <div className="flex flex-col lg:flex-row gap-8 md:gap-12 lg:justify-center items-center flex-1 py-10 md:p-8 w-full">
-        <motion.div
-          ref={inputContainerRef}
-          className="relative w-4/5 md:w-8/12 lg:w-[575px] h-[400px] min-h-[350px] sm:min-h-[400px] bg-[#E7DECD] rounded-xl flex flex-col focus-within:shadow-[0px_0px_0px_1.5px_#8F99FB]"
-        >
+        <motion.div className="relative w-4/5 md:w-8/12 lg:w-[575px] bg-[#E7DECD] rounded-xl flex flex-col focus-within:shadow-[0px_0px_0px_1.5px_#8F99FB]">
           <Dropdown
             toLang={toLang}
             fromLang={fromLang}
@@ -108,7 +104,6 @@ const Home = () => {
           <hr className="bg-black border-0 h-[1px]" />
           <TranslationForm
             translate={translate}
-            inputContainerRef={inputContainerRef}
             translationChanged={translationChanged}
             setFormFontSize={setFormFontSize}
           />
