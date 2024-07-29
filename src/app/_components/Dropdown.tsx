@@ -15,7 +15,6 @@ type Props = {
 const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
   const [fromLangDropIsOpen, setFromLangDropIsOpen] = useState(false);
   const [toLangDropIsOpen, setToLangDropIsOpen] = useState(false);
-  const [count, setCount] = useState(0); // used as a solution to fix key issue with AnimatePresence when quickly exiting and entering the component
 
   const switchLang = () => {
     if (toLang != fromLang) {
@@ -58,7 +57,6 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
           onClick={() => {
             if (toLangDropIsOpen) setToLangDropIsOpen(false);
             setFromLangDropIsOpen(!fromLangDropIsOpen);
-            setCount(count + 1);
           }}
         >
           <div>{languages[fromLang]}</div>
@@ -92,33 +90,35 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
           onClick={() => {
             if (fromLangDropIsOpen) setFromLangDropIsOpen(false);
             setToLangDropIsOpen(!toLangDropIsOpen);
-            setCount(count + 1);
           }}
         >
           <div>{languages[toLang]}</div>
           <motion.div
-            className="relative w-[14px] h-[14px] shrink-0"
+            className="shrink-0"
             animate={{ rotate: toLangDropIsOpen ? 180 : 0 }}
           >
-            <motion.div
-              className="shrink-0"
-              animate={{ rotate: fromLangDropIsOpen ? 180 : 0 }}
-            >
-              <Image
-                src="/down-chevron.svg"
-                alt="down chevron"
-                width={14}
-                height={14}
-              />
-            </motion.div>
+            <Image
+              src="/down-chevron.svg"
+              alt="down chevron"
+              width={14}
+              height={14}
+            />
           </motion.div>
         </button>
       </div>
       <AnimatePresence mode="wait">
-        {fromLangDropIsOpen !== toLangDropIsOpen && (
+        {fromLangDropIsOpen && (
           <DropdownContent
-            key={count}
-            activeLang={fromLangDropIsOpen ? fromLang : toLang}
+            key="from"
+            activeLang={fromLang}
+            setLanguage={setLanguage}
+            handleOutsideClick={handleOutsideClick}
+          />
+        )}
+        {toLangDropIsOpen && (
+          <DropdownContent
+            key="to"
+            activeLang={toLang}
             setLanguage={setLanguage}
             handleOutsideClick={handleOutsideClick}
           />
