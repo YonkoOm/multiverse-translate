@@ -94,7 +94,7 @@ const Home = () => {
         </div>
       </div>
       <div className="flex flex-col lg:flex-row gap-8 md:gap-12 lg:justify-center items-center flex-1 py-8 md:px-8 w-full">
-        <motion.div className="relative w-4/5 md:w-8/12 lg:w-[575px] bg-[#E7DECD] rounded-xl flex flex-col focus-within:shadow-[0px_0px_0px_1.5px_#8F99FB]">
+        <motion.div className="relative w-4/5 md:w-9/12 lg:w-[575px] bg-[#E7DECD] rounded-xl flex flex-col focus-within:shadow-[0px_0px_0px_1.5px_#8F99FB]">
           <Dropdown
             toLang={toLang}
             fromLang={fromLang}
