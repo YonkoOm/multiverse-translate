@@ -24,7 +24,7 @@ const TranslationForm = ({ translate }: Props) => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{
-          opacity: fromLang !== "" && toLang !== "" ? 1 : 0,
+          opacity: 1,
           transition: { duration: 0.5, ease: "easeInOut" },
         }}
       >
