@@ -52,7 +52,7 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
   };
 
   return (
-    <div>
+    <>
       <div
         className={`flex w-full justify-between sm:items-center ${mplus.className} text-sm md:text-base`}
       >
@@ -128,7 +128,7 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
           />
         )}
       </AnimatePresence>
-    </div>
+    </>
   );
 };
 
