@@ -14,13 +14,6 @@ const TranslationList = ({ translations, isLoading }: Props) => {
   const maxLength = Math.max(...translations.map(({ text }) => text.length));
   const fontSize =
     maxLength > 150 || width < 640 ? 18 : maxLength > 50 ? 20 : 24;
-  const shortTranslations = translations.filter(
-    ({ text }) => text.length < 150,
-  );
-  const longTranslations = translations.filter(
-    ({ text }) => text.length >= 150,
-  );
-  const orderedTranslations = shortTranslations.concat(longTranslations);
 
   return !isLoading ? (
     translations.length > 0 ? (
@@ -28,11 +21,12 @@ const TranslationList = ({ translations, isLoading }: Props) => {
         className="text-black gap-3 flex flex-col w-4/5 sm:w-9/12 md:w-8/12 lg:w-[450px]"
         style={{ fontSize }}
       >
-        {orderedTranslations.map((translation, i) => (
+        {translations.map((translation, i) => (
           <Translation
             key={translation.translator}
             translation={translation}
             translationIndex={i}
+            showOnlyInitial={maxLength > 150}
           />
         ))}
       </div>
