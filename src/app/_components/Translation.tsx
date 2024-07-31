@@ -63,8 +63,8 @@ const Translation = ({ translation, itemIndex }: Props) => {
 
   useEffect(() => {
     const showTimeout = setTimeout(() => {
-      if ((text.length < 100 || itemIndex === 0) && succeeded) setShow(true);
-    }, 750);
+      if ((text.length < 150 || itemIndex === 0) && succeeded) setShow(true);
+    }, 500);
 
     return () => {
       clearTimeout(showTimeout);
@@ -110,27 +110,24 @@ const Translation = ({ translation, itemIndex }: Props) => {
       </div>
       <AnimatePresence>
         {show && (
-          <>
-            <hr className="bg-[#C5BDAF] border-0 h-[1px]" />
+          <motion.div
+            className={`${!succeeded && "text-xl"} flex justify-center items-center ${lato.className}`}
+            key={translator}
+            variants={textContainerAnimation}
+            initial="initial"
+            animate="enter"
+            exit="exit"
+          >
             <motion.div
-              className={`${!succeeded && "text-xl"} flex justify-center items-center ${lato.className}`}
-              key={translator}
-              variants={textContainerAnimation}
+              className="py-2 px-3 border border-t-[#C5BDAF]"
+              variants={textAnimation}
               initial="initial"
               animate="enter"
               exit="exit"
             >
-              <motion.div
-                className="py-2 px-3"
-                variants={textAnimation}
-                initial="initial"
-                animate="enter"
-                exit="exit"
-              >
-                {text}
-              </motion.div>
+              {text}
             </motion.div>
-          </>
+          </motion.div>
         )}
       </AnimatePresence>
     </motion.div>
