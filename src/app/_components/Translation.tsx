@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react";
-import Image from "next/image";
-import { AnimatePresence, motion, Variants } from "framer-motion";
 import { mplus, lato } from "../fonts";
+import { AnimatePresence, motion, Variants } from "framer-motion";
 import { Translation as TranslationType } from "../page";
+import Image from "next/image";
+import useWindowDimensions from "../hooks/useWindowDimensions";
 
 type Props = {
   translation: TranslationType;
-  fontSize: number;
   itemIndex: number;
 };
 
-const Translation = ({ translation, fontSize, itemIndex }: Props) => {
+const Translation = ({ translation, itemIndex }: Props) => {
   const [show, setShow] = useState(false);
+  const { width } = useWindowDimensions();
+
   const { translator, text, succeeded } = translation;
 
   const translationAnimation: Variants = {
@@ -30,7 +32,7 @@ const Translation = ({ translation, fontSize, itemIndex }: Props) => {
       height: "0px",
     },
     enter: {
-      height: text.length < 100 ? "120px" : "auto",
+      height: text.length < 75 && width > 480 ? "120px" : "auto",
       transition: {
         duration: text.length < 100 ? 0.15 : 0.2,
         ease: "easeInOut",
@@ -61,13 +63,13 @@ const Translation = ({ translation, fontSize, itemIndex }: Props) => {
 
   useEffect(() => {
     const showTimeout = setTimeout(() => {
-      if (text.length < 100 || itemIndex === 0) setShow(true);
+      if ((text.length < 100 || itemIndex === 0) && succeeded) setShow(true);
     }, 750);
 
     return () => {
       clearTimeout(showTimeout);
     };
-  }, [text.length, itemIndex]);
+  }, [text.length, itemIndex, succeeded]);
 
   return (
     <motion.div
@@ -81,7 +83,6 @@ const Translation = ({ translation, fontSize, itemIndex }: Props) => {
       <div className="flex justify-between">
         <motion.div
           animate={{
-            borderBottomRightRadius: show ? 6 : 0,
             borderBottomLeftRadius: !show ? 8 : 0,
             transition: { duration: 1, delay: 0.1 },
           }}
@@ -91,7 +92,6 @@ const Translation = ({ translation, fontSize, itemIndex }: Props) => {
         </motion.div>
         <motion.button
           animate={{
-            borderBottomLeftRadius: show ? 6 : 0,
             borderBottomRightRadius: !show ? 8 : 0,
             transition: { duration: 1, delay: 0.1 },
           }}
@@ -110,24 +110,27 @@ const Translation = ({ translation, fontSize, itemIndex }: Props) => {
       </div>
       <AnimatePresence>
         {show && (
-          <motion.div
-            className={`${succeeded ? `text-[${fontSize}px]` : "text-xl"} flex justify-center items-center ${lato.className}`}
-            key={translator}
-            variants={textContainerAnimation}
-            initial="initial"
-            animate="enter"
-            exit="exit"
-          >
+          <>
+            <hr className="bg-[#C5BDAF] border-0 h-[1px]" />
             <motion.div
-              className="py-2 px-3"
-              variants={textAnimation}
+              className={`${!succeeded && "text-xl"} flex justify-center items-center ${lato.className}`}
+              key={translator}
+              variants={textContainerAnimation}
               initial="initial"
               animate="enter"
               exit="exit"
             >
-              {text}
+              <motion.div
+                className="py-2 px-3"
+                variants={textAnimation}
+                initial="initial"
+                animate="enter"
+                exit="exit"
+              >
+                {text}
+              </motion.div>
             </motion.div>
-          </motion.div>
+          </>
         )}
       </AnimatePresence>
     </motion.div>

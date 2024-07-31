@@ -5,10 +5,9 @@ import Form from "./Form";
 
 type Props = {
   translate: (fromLang: string, toLang: string, text: string) => Promise<void>;
-  setFormFontSize: React.Dispatch<React.SetStateAction<number>>;
 };
 
-const TranslationForm = ({ translate, setFormFontSize }: Props) => {
+const TranslationForm = ({ translate }: Props) => {
   const [fromLang, setFromLang] = useState("EN");
   const [toLang, setToLang] = useState("EN");
 
@@ -21,12 +20,7 @@ const TranslationForm = ({ translate, setFormFontSize }: Props) => {
         setToLang={setToLang}
       />
       <hr className="bg-black border-0 h-[1px]" />
-      <Form
-        translate={translate}
-        setFormFontSize={setFormFontSize}
-        toLang={toLang}
-        fromLang={fromLang}
-      />
+      <Form translate={translate} toLang={toLang} fromLang={fromLang} />
     </motion.div>
   );
 };

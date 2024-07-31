@@ -2,14 +2,19 @@ import { Translation as TranslationType } from "../page";
 import { lato } from "../fonts";
 import Translation from "./Translation";
 import LoadingAnimation from "./LoadingAnimation";
+import useWindowDimensions from "../hooks/useWindowDimensions";
 
 type Props = {
   translations: TranslationType[];
-  fontSize: number;
   isLoading: boolean;
 };
 
-const TranslationList = ({ translations, fontSize, isLoading }: Props) => {
+const TranslationList = ({ translations, isLoading }: Props) => {
+  const { width } = useWindowDimensions();
+  const maxLength = Math.max(...translations.map(({ text }) => text.length));
+  const fontSize =
+    maxLength > 150 || width < 640 ? 18 : maxLength > 50 ? 20 : 24;
+
   return !isLoading ? (
     translations.length > 0 ? (
       <div
@@ -21,7 +26,6 @@ const TranslationList = ({ translations, fontSize, isLoading }: Props) => {
             key={translation.translator}
             translation={translation}
             itemIndex={i}
-            fontSize={fontSize}
           />
         ))}
       </div>

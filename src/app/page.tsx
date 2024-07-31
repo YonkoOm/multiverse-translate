@@ -11,8 +11,6 @@ export type Translation = {
 
 const Home = () => {
   const [translations, setTranslations] = useState<Translation[]>([]);
-  const [listFontSize, setListFontSize] = useState(26);
-  const [formFontSize, setFormFontSize] = useState(26);
   const [isLoading, setIsLoading] = useState(false);
 
   const apis = [
@@ -24,7 +22,6 @@ const Home = () => {
 
   const translate = async (fromLang: string, toLang: string, text: string) => {
     setIsLoading(true);
-    setListFontSize(formFontSize);
     setTranslations([]);
 
     apis.forEach(async (api) => {
@@ -62,15 +59,8 @@ const Home = () => {
 
   return (
     <div className="flex flex-col lg:flex-row gap-8 md:gap-12 lg:justify-center items-center flex-1 py-8 md:px-8 w-full">
-      <TranslationForm
-        translate={translate}
-        setFormFontSize={setFormFontSize}
-      />
-      <TranslationList
-        translations={translations}
-        fontSize={listFontSize}
-        isLoading={isLoading}
-      />
+      <TranslationForm translate={translate} />
+      <TranslationList translations={translations} isLoading={isLoading} />
     </div>
   );
 };
