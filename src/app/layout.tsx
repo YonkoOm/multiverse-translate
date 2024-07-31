@@ -20,7 +20,13 @@ export default function RootLayout({
         <div className="flex flex-col w-full h-screen">
           <div className="p-2 w-fit border-b border-r bg-[#2A3E5F]/70 rounded-br-lg rounded-tr-md border-[#E7DECD] flex items-center gap-x-2">
             <div className="relative w-7 h-7 md:w-9 md:h-9">
-              <Image src="/icon.png" fill sizes="48px" alt="translation-logo" />
+              <Image
+                src="/icon.png"
+                priority
+                fill
+                sizes="48px"
+                alt="translation-logo"
+              />
             </div>
             <div
               className={`text-[#fff7ed] text-center text-xs md:text-sm font-bold ${mplus.className}`}

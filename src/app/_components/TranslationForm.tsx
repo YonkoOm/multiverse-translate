@@ -13,8 +13,8 @@ const TranslationForm = ({ translate }: Props) => {
 
   useEffect(() => {
     const fromLang = localStorage.getItem("fromLang");
-    setFromLang(fromLang ? fromLang : "EN");
     const toLang = localStorage.getItem("toLang");
+    setFromLang(fromLang ? fromLang : "EN");
     setToLang(toLang ? toLang : "EN");
   }, []);
 

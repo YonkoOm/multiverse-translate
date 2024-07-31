@@ -56,7 +56,7 @@ const Form = ({ translate, fromLang, toLang }: Props) => {
     <form
       onSubmit={handleTranslation}
       onKeyDown={checkEnterPress}
-      className="flex flex-col"
+      className="flex flex-col w-full"
     >
       <textarea
         maxLength={3000}
@@ -64,11 +64,11 @@ const Form = ({ translate, fromLang, toLang }: Props) => {
         placeholder="hit enter or press translate to query. `Shift + Enter` for new line"
         value={text}
         onChange={handleText}
-        className={`min-h-[250px] md:min-h-[275] lg:min-h-[350px] outline-none resize-none text-black w-full h-full p-5 pt-2 placeholder-slate-500 bg-inherit overflow-hidden ${lato.className} text-xl placeholder:text-xl lg:placeholder:text-2xl`} // min height used as we are dynamically resizing the text area based on content
+        className={`min-h-[250px] md:min-h-[275] lg:min-h-[350px] outline-none resize-none text-black p-5 pt-2 placeholder-slate-500 bg-inherit ${lato.className} text-xl placeholder:text-xl lg:placeholder:text-2xl`} // min height used as we are dynamically resizing the text area based on content
       />
       <button
         type="submit"
-        className={`self-end text-white font-bold w-fit bg-[#677DB7] hover:bg-[#677DB7]/90 p-2 rounded-tl-lg rounded-br-xl ${mplus.className}`}
+        className={`w-fit self-end text-white font-bold bg-[#677DB7] hover:bg-[#677DB7]/90 p-2 rounded-tl-lg rounded-br-xl ${mplus.className}`}
       >
         Translate
       </button>
