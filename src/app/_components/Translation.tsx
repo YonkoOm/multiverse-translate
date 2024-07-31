@@ -70,7 +70,6 @@ const Translation = ({ translation, itemIndex }: Props) => {
       clearTimeout(showTimeout);
     };
   }, [text.length, itemIndex, succeeded]);
-
   return (
     <motion.div
       layout
@@ -119,7 +118,7 @@ const Translation = ({ translation, itemIndex }: Props) => {
             exit="exit"
           >
             <motion.div
-              className="py-2 px-3 border border-t-[#C5BDAF]"
+              className="py-2 px-3 border-t-[#C5BDAF] border-t-[1px]"
               variants={textAnimation}
               initial="initial"
               animate="enter"
