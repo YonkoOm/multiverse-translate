@@ -18,6 +18,8 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
 
   const switchLang = () => {
     if (toLang != fromLang) {
+      localStorage.setItem("fromLang", toLang);
+      localStorage.setItem("toLang", fromLang);
       const fromLangTemp = fromLang;
       setFromLang(toLang);
       setToLang(fromLangTemp);
@@ -28,10 +30,12 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
     if (fromLangDropIsOpen) {
       setFromLang(lang);
       setFromLangDropIsOpen(false);
+      localStorage.setItem("fromLang", lang);
     }
     if (toLangDropIsOpen) {
       setToLang(lang);
       setToLangDropIsOpen(false);
+      localStorage.setItem("toLang", lang);
     }
   };
 
