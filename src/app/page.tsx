@@ -9,52 +9,46 @@ export type Translation = {
   succeeded: boolean;
 };
 
+const apis = [
+  { name: "DeepL", translator: "/api/DeepLTranslate" },
+  { name: "Google", translator: "/api/GoogleTranslate" },
+  { name: "Bing", translator: "/api/BingTranslate" },
+  { name: "Reverso", translator: "/api/ReversoTranslate" },
+];
+
 const Home = () => {
   const [translations, setTranslations] = useState<Translation[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-
-  const apis = [
-    { name: "DeepL", translator: "/api/DeepLTranslate" },
-    { name: "Google", translator: "/api/GoogleTranslate" },
-    { name: "Bing", translator: "/api/BingTranslate" },
-    { name: "Reverso", translator: "/api/ReversoTranslate" },
-  ];
 
   const translate = async (fromLang: string, toLang: string, text: string) => {
     setIsLoading(true);
     setTranslations([]);
 
-    apis.forEach(async (api) => {
-      const res = await fetch(api.translator, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ text, fromLang, toLang }),
-      });
-
-      if (res.status === 400) {
-        const body = await res.json();
-        console.error(body.error);
-      } else if (!res.ok) {
-        const body = await res.json();
-        setTranslations((prevTranslation) => [
-          ...prevTranslation,
-          {
-            translator: api.name,
-            text: body.error,
-            succeeded: false,
+    await Promise.all(
+      apis.map(async (api) => {
+        const res = await fetch(api.translator, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
           },
-        ]);
-      } else {
-        const { translatedText }: { translatedText: string } = await res.json();
-        setTranslations((prevTranslatedData) => [
-          ...prevTranslatedData,
-          { translator: api.name, text: translatedText, succeeded: true },
-        ]);
-      }
-      setIsLoading(false);
-    });
+          body: JSON.stringify({ text, fromLang, toLang }),
+        });
+
+        if (!res.ok) {
+          const body = await res.json();
+          console.error(body.error);
+        } else {
+          const { translatedText }: { translatedText: string } =
+            await res.json();
+          setTranslations((prevTranslatedData) => [
+            ...prevTranslatedData,
+            { translator: api.name, text: translatedText, succeeded: true },
+          ]);
+          setIsLoading(false);
+        }
+      }),
+    );
+    setIsLoading(false);
   };
 
   return (
