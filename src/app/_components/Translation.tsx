@@ -8,13 +8,13 @@ import useWindowDimensions from "../hooks/useWindowDimensions";
 type Props = {
   translation: TranslationType;
   translationIndex: number;
-  showOnlyInitial: boolean;
+  isShownInitially: boolean;
 };
 
 const Translation = ({
   translation,
   translationIndex,
-  showOnlyInitial,
+  isShownInitially,
 }: Props) => {
   const [show, setShow] = useState(false);
   const { width } = useWindowDimensions();
@@ -68,17 +68,13 @@ const Translation = ({
 
   useEffect(() => {
     const showTimeout = setTimeout(() => {
-      if (showOnlyInitial) {
-        if (translationIndex === 0) setShow(true);
-      } else {
-        setShow(true);
-      }
+      setShow(isShownInitially);
     }, 750);
 
     return () => {
       clearTimeout(showTimeout);
     };
-  }, [text.length, translationIndex, showOnlyInitial]);
+  }, [text.length, translationIndex, isShownInitially]);
 
   return (
     <motion.div

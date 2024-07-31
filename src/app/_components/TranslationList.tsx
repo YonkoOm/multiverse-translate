@@ -26,7 +26,7 @@ const TranslationList = ({ translations, isLoading }: Props) => {
             key={translation.translator}
             translation={translation}
             translationIndex={i}
-            showOnlyInitial={maxLength > 150}
+            isShownInitially={maxLength < 150 || i === 0}
           />
         ))}
       </div>
