@@ -7,10 +7,10 @@ import useWindowDimensions from "../hooks/useWindowDimensions";
 
 type Props = {
   translation: TranslationType;
-  itemIndex: number;
+  translationIndex: number;
 };
 
-const Translation = ({ translation, itemIndex }: Props) => {
+const Translation = ({ translation, translationIndex }: Props) => {
   const [show, setShow] = useState(false);
   const { width } = useWindowDimensions();
 
@@ -63,13 +63,14 @@ const Translation = ({ translation, itemIndex }: Props) => {
 
   useEffect(() => {
     const showTimeout = setTimeout(() => {
-      if ((text.length < 150 || itemIndex === 0) && succeeded) setShow(true);
-    }, 500);
+      if (text.length < 150 || translationIndex === 0) setShow(true);
+    }, 750);
 
     return () => {
       clearTimeout(showTimeout);
     };
-  }, [text.length, itemIndex, succeeded]);
+  }, [text.length, translationIndex]);
+
   return (
     <motion.div
       layout
@@ -77,7 +78,7 @@ const Translation = ({ translation, itemIndex }: Props) => {
       initial="initial"
       animate="enter"
       transition={{ duration: 0.5 }}
-      className="bg-[#E7DECD] rounded-lg flex flex-col flex-1"
+      className="bg-[#E7DECD] rounded-lg flex flex-col"
     >
       <div className="flex justify-between">
         <motion.div
@@ -110,7 +111,7 @@ const Translation = ({ translation, itemIndex }: Props) => {
       <AnimatePresence>
         {show && (
           <motion.div
-            className={`${!succeeded && "text-xl"} flex justify-center items-center ${lato.className}`}
+            className={`${!succeeded && "text-xl"} ${lato.className}`}
             key={translator}
             variants={textContainerAnimation}
             initial="initial"
@@ -118,7 +119,7 @@ const Translation = ({ translation, itemIndex }: Props) => {
             exit="exit"
           >
             <motion.div
-              className="py-2 px-3 border-t-[#C5BDAF] border-t-[1px]"
+              className="py-2 px-3 border-t-[#C5BDAF] border-t-[1px] w-full h-full flex justify-center items-center"
               variants={textAnimation}
               initial="initial"
               animate="enter"
