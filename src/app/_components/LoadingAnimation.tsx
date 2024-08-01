@@ -18,15 +18,15 @@ const LoadingAnimation = () => {
 
   return (
     <motion.div
-      className="flex flex-row gap-3 justify-center"
+      className="flex gap-3 justify-center"
       initial="initial"
       animate="animate"
       transition={{ staggerChildren: 0.2 }}
     >
       {[...Array(3)].map((_, i) => (
-        <motion.span
+        <motion.div
           key={i}
-          className="bg-[#677DB7] w-2.5 h-2.5 rounded-3xl block"
+          className="bg-[#677DB7] w-2.5 h-2.5 rounded-3xl"
           variants={dotVariants}
         />
       ))}

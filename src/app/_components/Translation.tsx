@@ -124,7 +124,7 @@ const Translation = ({
             exit="exit"
           >
             <motion.div
-              className="py-2 px-3 border-t-[#C5BDAF] border-t-[1px] w-full h-full flex justify-center items-center"
+              className="py-2 px-3 border-t-[#C5BDAF] border-t-[1px] h-full flex justify-center items-center"
               variants={textVariants}
             >
               {text}

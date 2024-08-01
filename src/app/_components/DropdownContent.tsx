@@ -35,7 +35,7 @@ const DropdownContent = ({
       opacity: 0,
       height: 0,
     },
-    enter: {
+    animate: {
       opacity: 1,
       height: "100%",
       transition: { duration: 0.3 },
@@ -53,7 +53,7 @@ const DropdownContent = ({
       variants={dropdownVariants}
       initial="initial"
       exit="exit"
-      animate="enter"
+      animate="animate"
       className="absolute w-full shadow-xl bg-[#E7DECD] rounded-bl-xl rounded-br-xl z-10 overflow-hidden"
     >
       <motion.div
