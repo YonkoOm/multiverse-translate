@@ -19,7 +19,18 @@ const DropdownContent = ({
 }: Props) => {
   const contentRef = useRef<HTMLDivElement>(null);
 
-  const dropdownAnimation: Variants = {
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      handleOutsideClick(e, contentRef);
+    };
+
+    document.addEventListener("click", handleClick);
+    return () => {
+      document.removeEventListener("click", handleClick);
+    };
+  }, [handleOutsideClick]);
+
+  const dropdownVariants: Variants = {
     initial: {
       opacity: 0,
       height: 0,
@@ -36,21 +47,10 @@ const DropdownContent = ({
     },
   };
 
-  useEffect(() => {
-    const handleClick = (e: MouseEvent) => {
-      handleOutsideClick(e, contentRef);
-    };
-
-    document.addEventListener("click", handleClick);
-    return () => {
-      document.removeEventListener("click", handleClick);
-    };
-  }, [handleOutsideClick]);
-
   return (
     <motion.div
       ref={contentRef}
-      variants={dropdownAnimation}
+      variants={dropdownVariants}
       initial="initial"
       exit="exit"
       animate="enter"

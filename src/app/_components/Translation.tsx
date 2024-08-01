@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { mplus, lato } from "../fonts";
+import { mplus } from "../fonts";
 import { AnimatePresence, motion, Variants } from "framer-motion";
 import { Translation as TranslationType } from "../page";
 import Image from "next/image";
@@ -19,24 +19,24 @@ const Translation = ({
   const [show, setShow] = useState(false);
   const { width } = useWindowDimensions();
 
-  const { translator, text, succeeded } = translation;
+  const { translator, text } = translation;
 
-  const translationAnimation: Variants = {
+  const translationVariants: Variants = {
     initial: {
       opacity: 0,
       scale: 0,
     },
-    enter: {
+    animate: {
       opacity: 1,
       scale: 1,
     },
   };
 
-  const textContainerAnimation: Variants = {
+  const textContainerVariants: Variants = {
     initial: {
       height: "0px",
     },
-    enter: {
+    animate: {
       height: text.length < 75 && width > 480 ? "120px" : "auto",
       transition: {
         duration: text.length < 100 ? 0.15 : 0.2,
@@ -49,11 +49,11 @@ const Translation = ({
     },
   };
 
-  const textAnimation: Variants = {
+  const textVariants: Variants = {
     initial: {
       opacity: 0,
     },
-    enter: {
+    animate: {
       opacity: 1,
       transition: {
         duration: 0.2,
@@ -79,9 +79,9 @@ const Translation = ({
   return (
     <motion.div
       layout
-      variants={translationAnimation}
+      variants={translationVariants}
       initial="initial"
-      animate="enter"
+      animate="animate"
       transition={{ duration: 0.5 }}
       className="bg-[#E7DECD] rounded-lg flex flex-col"
     >
@@ -100,7 +100,7 @@ const Translation = ({
             borderBottomRightRadius: !show ? 8 : 0,
             transition: { duration: 1, delay: 0.1 },
           }}
-          className={`bg-[#677DB7] rounded-tr-lg p-2 hover:bg-[#677DB7]/90`}
+          className="bg-[#677DB7] rounded-tr-lg p-2 hover:bg-[#677DB7]/90"
           onClick={() => setShow(!show)}
         >
           <motion.div animate={{ rotate: show ? 90 : 0 }}>
@@ -116,19 +116,16 @@ const Translation = ({
       <AnimatePresence>
         {show && (
           <motion.div
-            className={`${!succeeded && "text-xl"} ${lato.className}`}
+            // className={succeeded ? "text-xl" : undefined}
             key={translator}
-            variants={textContainerAnimation}
+            variants={textContainerVariants}
             initial="initial"
-            animate="enter"
+            animate="animate"
             exit="exit"
           >
             <motion.div
               className="py-2 px-3 border-t-[#C5BDAF] border-t-[1px] w-full h-full flex justify-center items-center"
-              variants={textAnimation}
-              initial="initial"
-              animate="enter"
-              exit="exit"
+              variants={textVariants}
             >
               {text}
             </motion.div>

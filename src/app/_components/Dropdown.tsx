@@ -51,7 +51,7 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
     }
   };
 
-  const buttonVariant: Variants = {
+  const buttonVariants: Variants = {
     initial: { opacity: 0 },
     animate: { opacity: 1, transition: { duration: 0.5, ease: "easeInOut" } },
   };
@@ -67,7 +67,7 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
             if (toLangDropIsOpen) setToLangDropIsOpen(false);
             setFromLangDropIsOpen(!fromLangDropIsOpen);
           }}
-          variants={buttonVariant}
+          variants={buttonVariants}
           initial="initial"
           animate="animate"
         >
@@ -103,7 +103,7 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
             if (fromLangDropIsOpen) setFromLangDropIsOpen(false);
             setToLangDropIsOpen(!toLangDropIsOpen);
           }}
-          variants={buttonVariant}
+          variants={buttonVariants}
           initial="initial"
           animate="animate"
         >
