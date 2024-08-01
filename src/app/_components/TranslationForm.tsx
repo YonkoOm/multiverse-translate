@@ -12,28 +12,18 @@ const TranslationForm = ({ translate }: Props) => {
   const [toLang, setToLang] = useState("EN");
 
   useEffect(() => {
-    const fromLang = localStorage.getItem("fromLang");
-    const toLang = localStorage.getItem("toLang");
-    setFromLang(fromLang ? fromLang : "EN");
-    setToLang(toLang ? toLang : "EN");
+    setFromLang(localStorage.getItem("fromLang") || "EN");
+    setToLang(localStorage.getItem("toLang") || "EN");
   }, []);
 
   return (
     <motion.div className="relative w-4/5 md:w-9/12 lg:w-[575px] bg-[#E7DECD] rounded-xl flex flex-col focus-within:shadow-[0px_0px_0px_1.5px_#8F99FB]">
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{
-          opacity: 1,
-          transition: { duration: 0.5, ease: "easeInOut" },
-        }}
-      >
-        <Dropdown
-          toLang={toLang}
-          fromLang={fromLang}
-          setFromLang={setFromLang}
-          setToLang={setToLang}
-        />
-      </motion.div>
+      <Dropdown
+        toLang={toLang}
+        fromLang={fromLang}
+        setFromLang={setFromLang}
+        setToLang={setToLang}
+      />
       <hr className="bg-black border-0 h-[1px]" />
       <Form translate={translate} toLang={toLang} fromLang={fromLang} />
     </motion.div>

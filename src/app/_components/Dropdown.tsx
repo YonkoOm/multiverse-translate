@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 import { languages } from "../_utils/languages";
 import { mplus } from "../fonts";
 import DropdownContent from "./DropdownContent";
@@ -51,17 +51,25 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
     }
   };
 
+  const buttonVariant: Variants = {
+    initial: { opacity: 0 },
+    animate: { opacity: 1, transition: { duration: 0.5, ease: "easeInOut" } },
+  };
+
   return (
-    <>
+    <div>
       <div
         className={`flex w-full justify-between sm:items-center ${mplus.className} text-sm md:text-base`}
       >
-        <button
+        <motion.button
           className="text-white flex flex-1 sm:flex-initial gap-x-2 bg-[#677DB7] hover:bg-[#677DB7]/90 px-3 sm:py-3 rounded-tl-xl font-bold items-center justify-center"
           onClick={() => {
             if (toLangDropIsOpen) setToLangDropIsOpen(false);
             setFromLangDropIsOpen(!fromLangDropIsOpen);
           }}
+          variants={buttonVariant}
+          initial="initial"
+          animate="animate"
         >
           <div>{languages[fromLang]}</div>
           <motion.div
@@ -75,7 +83,7 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
               height={14}
             />
           </motion.div>
-        </button>
+        </motion.button>
         <button
           className="mx-auto sm:absolute sm:left-1/2 sm:-translate-x-1/2 hover:bg-[#677DB7]/20 rounded-lg shrink-0"
           onClick={switchLang}
@@ -89,12 +97,15 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
             priority
           />
         </button>
-        <button
+        <motion.button
           className="text-white flex flex-1 sm:flex-initial gap-x-2 bg-[#677DB7] hover:bg-[#677DB7]/90 px-3 sm:py-3 rounded-tr-xl font-bold items-center justify-center"
           onClick={() => {
             if (fromLangDropIsOpen) setFromLangDropIsOpen(false);
             setToLangDropIsOpen(!toLangDropIsOpen);
           }}
+          variants={buttonVariant}
+          initial="initial"
+          animate="animate"
         >
           <div>{languages[toLang]}</div>
           <motion.div
@@ -108,7 +119,7 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
               height={14}
             />
           </motion.div>
-        </button>
+        </motion.button>
       </div>
       <AnimatePresence mode="wait">
         {fromLangDropIsOpen && (
@@ -128,7 +139,7 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
           />
         )}
       </AnimatePresence>
-    </>
+    </div>
   );
 };
 
