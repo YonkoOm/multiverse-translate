@@ -3,7 +3,7 @@ import { mplus } from "../fonts";
 import { AnimatePresence, motion, Variants } from "framer-motion";
 import { Translation as TranslationType } from "../page";
 import Image from "next/image";
-import useWindowDimensions from "../hooks/useWindowDimensions";
+import useWindowDimensions from "../_hooks/useWindowDimensions";
 
 type Props = {
   translation: TranslationType;

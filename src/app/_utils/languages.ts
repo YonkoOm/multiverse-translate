@@ -75,8 +75,8 @@ export const languages: { [key: string]: string } = {
 };
 
 export const sortedLanguages = Object.keys(languages)
-  .map((lang) => ({
-    code: lang,
-    language: languages[lang],
+  .map((code) => ({
+    code,
+    language: languages[code],
   }))
   .sort((lang1, lang2) => (lang1.language < lang2.language ? -1 : 1));

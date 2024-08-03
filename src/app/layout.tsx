@@ -6,7 +6,28 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Multiverse Translate",
   description:
-    "Translation service that queries multiple translations services all in one location for ease",
+    "Translation service that queries multiple translations services all in one location for ease and faster learning",
+  authors: [
+    { name: "Om Moradia", url: "https://multiverse-translate.vercel.app" },
+    { name: "YonkoOm", url: "https://yonkoom.vercel.app" },
+  ],
+  keywords: [
+    "translator",
+    "translation service",
+    "multi-translation",
+    "multilingual translation",
+  ],
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+  },
+  openGraph: {
+    type: "website",
+    title: "Multiverse Translate",
+    description:
+      "Translation service that queries multiple translations services all in one location for ease and faster learning",
+    images: [{ url: "/icon.png", alt: "Multiverse Translate Icon" }],
+  },
 };
 
 export default function RootLayout({

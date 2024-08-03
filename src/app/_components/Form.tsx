@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { mplus, lato } from "../fonts";
-import useWindowDimensions from "../hooks/useWindowDimensions";
+import useWindowDimensions from "../_hooks/useWindowDimensions";
 
 type Props = {
   translate: (fromLang: string, toLang: string, text: string) => Promise<void>;

@@ -2,7 +2,7 @@ import { Translation as TranslationType } from "../page";
 import { lato } from "../fonts";
 import Translation from "./Translation";
 import LoadingAnimation from "./LoadingAnimation";
-import useWindowDimensions from "../hooks/useWindowDimensions";
+import useWindowDimensions from "../_hooks/useWindowDimensions";
 
 type Props = {
   translations: TranslationType[];
