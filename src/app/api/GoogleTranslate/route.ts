@@ -1,4 +1,4 @@
-import { supportedLanguages } from "../_utils/GoogleSupportedLanguages";
+import { supportedLanguages } from "@/constants/api/GoogleSupportedLanguages";
 
 export async function POST(req: Request) {
   const { text, fromLang, toLang } = await req.json();

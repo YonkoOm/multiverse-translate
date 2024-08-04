@@ -1,4 +1,4 @@
-import { supportedLanguages } from "../_utils/BingSupportedLanguages";
+import { supportedLanguages } from "@/constants/api/BingSupportedLanguages";
 
 type TokenInfo = {
   token: string;

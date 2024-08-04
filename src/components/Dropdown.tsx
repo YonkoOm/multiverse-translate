@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
-import { languages } from "../_utils/languages";
-import { mplus } from "../fonts";
+import { languages } from "@/constants/languages";
+import { mplus } from "@/styles/fonts";
 import DropdownContent from "./DropdownContent";
 import Image from "next/image";
 

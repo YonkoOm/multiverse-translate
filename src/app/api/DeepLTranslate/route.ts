@@ -1,7 +1,7 @@
 import {
   sourceLanguages,
   targetLanguages,
-} from "../_utils/DeepLSupportedLanguages";
+} from "@/constants/api/DeepLSupportedLanguages";
 
 export async function POST(req: Request) {
   const getRandomNumber = () => Math.floor(Math.random() * 89999) + 100000;

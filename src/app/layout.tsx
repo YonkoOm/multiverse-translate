@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { mplus } from "./fonts";
-import "./globals.css";
+import { mplus } from "@/styles/fonts";
+import "@/styles/globals.css";
 
 export const metadata: Metadata = {
   title: "Multiverse Translate",

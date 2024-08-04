@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { mplus } from "../fonts";
+import { mplus } from "@/styles/fonts";
 import { AnimatePresence, motion, Variants } from "framer-motion";
-import { Translation as TranslationType } from "../page";
+import { Translation as TranslationType } from "@/app/page";
 import Image from "next/image";
-import useWindowDimensions from "../_hooks/useWindowDimensions";
+import useWindowDimensions from "@/hooks/useWindowDimensions";
 
 type Props = {
   translation: TranslationType;

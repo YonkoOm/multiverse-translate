@@ -1,4 +1,4 @@
-import { supportedLanguages } from "../_utils/ReversoSupportedLanguages";
+import { supportedLanguages } from "@/constants/api/BingSupportedLanguages";
 
 export async function POST(req: Request) {
   const API_TRANSLATE = "https://api.reverso.net/translate/v1/translation";

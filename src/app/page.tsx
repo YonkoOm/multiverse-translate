@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import TranslationList from "./_components/TranslationList";
-import TranslationForm from "./_components/TranslationForm";
+import TranslationList from "@/components/TranslationList";
+import TranslationForm from "@/components/TranslationForm";
 
 export type Translation = {
   translator: string;

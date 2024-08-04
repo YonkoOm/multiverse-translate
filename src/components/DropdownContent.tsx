@@ -1,7 +1,7 @@
-import { motion, Variants } from "framer-motion";
-import { sortedLanguages } from "../_utils/languages";
-import { lato } from "../fonts";
 import { useEffect, useRef } from "react";
+import { motion, Variants } from "framer-motion";
+import { sortedLanguages } from "@/constants/languages";
+import { lato } from "@/styles/fonts";
 
 type Props = {
   activeLang: string;
