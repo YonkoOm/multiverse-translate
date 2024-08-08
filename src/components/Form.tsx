@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { mplus, lato } from "@/styles/fonts";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
+import Image from "next/image";
 
 type Props = {
   translate: (fromLang: string, toLang: string, text: string) => Promise<void>;
@@ -58,14 +59,29 @@ const Form = ({ translate, fromLang, toLang }: Props) => {
       onKeyDown={checkEnterPress}
       className="flex flex-col w-full"
     >
-      <textarea
-        maxLength={3000}
-        ref={textAreaRef}
-        placeholder="hit enter or press translate to query. `Shift + Enter` for new line"
-        value={text}
-        onChange={handleText}
-        className={`min-h-[250px] md:min-h-[275] lg:min-h-[350px] outline-none resize-none text-black p-5 pt-2 placeholder-slate-500 bg-inherit ${lato.className} text-xl placeholder:text-xl lg:placeholder:text-2xl`} // min height used as we are dynamically resizing the text area based on content
-      />
+      <div className="flex items-start p-2">
+        <textarea
+          maxLength={3000}
+          ref={textAreaRef}
+          placeholder="hit enter or press translate to query. `Shift + Enter` for new line"
+          value={text}
+          onChange={handleText}
+          className={`min-h-[250px] md:min-h-[275] flex-1 px-2 lg:min-h-[350px] outline-none resize-none text-black placeholder-slate-500 bg-inherit ${lato.className} text-xl placeholder:text-xl lg:placeholder:text-2xl`} // min height used as we are dynamically resizing the text area based on content
+        />
+        {text.length > 0 && (
+          <button
+            onClick={() => setText("")}
+            className="p-1 hover:bg-[#677DB7]/20 rounded-2xl"
+          >
+            <Image
+              src="/clear-button.svg"
+              alt="clear button"
+              height={24}
+              width={24}
+            />
+          </button>
+        )}
+      </div>
       <button
         type="submit"
         className={`w-fit self-end text-white font-bold bg-[#677DB7] hover:bg-[#677DB7]/90 p-2 rounded-tl-lg rounded-br-xl ${mplus.className}`}
