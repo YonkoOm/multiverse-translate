@@ -1,11 +1,11 @@
-import { Translation as TranslationType } from "@/app/page";
+import { TranslationData } from "@/app/page";
 import { lato } from "@/styles/fonts";
 import Translation from "./Translation";
 import LoadingAnimation from "./LoadingAnimation";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
 
 type Props = {
-  translations: TranslationType[];
+  translations: TranslationData[];
   isLoading: boolean;
 };
 

@@ -3,21 +3,21 @@ import { useState } from "react";
 import TranslationList from "@/components/TranslationList";
 import TranslationForm from "@/components/TranslationForm";
 
-export type Translation = {
+export type TranslationData = {
   translator: string;
   text: string;
   succeeded: boolean;
 };
 
 const apis = [
-  { name: "DeepL", translator: "/api/DeepLTranslate" },
-  { name: "Google", translator: "/api/GoogleTranslate" },
-  { name: "Bing", translator: "/api/BingTranslate" },
-  { name: "Reverso", translator: "/api/ReversoTranslate" },
+  { translator: "DeepL", endpoint: "/api/DeepLTranslate" },
+  { translator: "Google", endpoint: "/api/GoogleTranslate" },
+  { translator: "Bing", endpoint: "/api/BingTranslate" },
+  { translator: "Reverso", endpoint: "/api/ReversoTranslate" },
 ];
 
 const Home = () => {
-  const [translations, setTranslations] = useState<Translation[]>([]);
+  const [translations, setTranslations] = useState<TranslationData[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const translate = async (fromLang: string, toLang: string, text: string) => {
@@ -26,7 +26,7 @@ const Home = () => {
 
     await Promise.all(
       apis.map(async (api) => {
-        const res = await fetch(api.translator, {
+        const res = await fetch(api.endpoint, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -35,20 +35,24 @@ const Home = () => {
         });
 
         if (!res.ok) {
-          const body = await res.json();
-          console.error(body.error);
+          const { error }: { error: string } = await res.json();
+          console.error(error);
         } else {
           const { translatedText }: { translatedText: string } =
             await res.json();
           setTranslations((prevTranslatedData) => [
             ...prevTranslatedData,
-            { translator: api.name, text: translatedText, succeeded: true },
+            {
+              translator: api.translator,
+              text: translatedText,
+              succeeded: true,
+            },
           ]);
           setIsLoading(false);
         }
       }),
     );
-    setIsLoading(false);
+    setIsLoading(false); // set loading state to false in the case that every translation api calls fail
   };
 
   return (

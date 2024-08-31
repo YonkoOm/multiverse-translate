@@ -95,7 +95,7 @@ export async function POST(req: Request) {
       translatedText: translationData[0].translations[0].text,
     });
   } catch (e) {
-    console.log((e as Error).message);
+    console.error((e as Error).message);
     return Response.json(
       {
         error:

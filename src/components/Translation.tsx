@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { mplus } from "@/styles/fonts";
 import { AnimatePresence, motion, Variants } from "framer-motion";
-import { Translation as TranslationType } from "@/app/page";
+import { TranslationData } from "@/app/page";
 import Image from "next/image";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
 
 type Props = {
-  translation: TranslationType;
+  translation: TranslationData;
   translationIndex: number;
   isShownInitially: boolean;
 };

@@ -17,16 +17,17 @@ export const metadata: Metadata = {
     "multi-translation",
     "multilingual translation",
   ],
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-  },
   openGraph: {
     type: "website",
     title: "Multiverse Translate",
     description:
       "Translation service that queries multiple translations services all in one location for ease and faster learning",
-    images: [{ url: "/icon.png", alt: "Multiverse Translate Icon" }],
+    images: [
+      {
+        url: "https://multiverse-translate.vercel.app/icon.png",
+        alt: "Multiverse Translate Icon",
+      },
+    ],
   },
 };
 
