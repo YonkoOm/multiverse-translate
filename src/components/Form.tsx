@@ -67,6 +67,7 @@ const Form = ({ translate, fromLang, toLang }: Props) => {
           value={text}
           onChange={handleText}
           className={`min-h-[250px] md:min-h-[275] flex-1 px-2 lg:min-h-[350px] outline-none resize-none text-black placeholder-slate-500 bg-inherit ${lato.className} text-xl placeholder:text-xl lg:placeholder:text-2xl`} // min height used as we are dynamically resizing the text area based on content
+          autoFocus
         />
         {text.length > 0 && (
           <button
