@@ -37,7 +37,7 @@ const Translation = ({
       height: "0px",
     },
     animate: {
-      height: text.length < 75 && width > 480 ? "120px" : "auto",
+      height: text.length < 75 && width > 480 ? "7rem" : "auto",
       transition: {
         duration: text.length < 100 ? 0.15 : 0.2,
         ease: "easeInOut",
@@ -124,7 +124,7 @@ const Translation = ({
             exit="exit"
           >
             <motion.div
-              className="py-2 px-3 border-t-[#C5BDAF] border-t-[1px] h-full flex justify-center items-center"
+              className="py-2 px-3 border-t-[#C5BDAF] border-t-[1px] min-h-[7rem] h-full flex justify-center items-center"
               variants={textVariants}
             >
               {text}
