@@ -41,7 +41,7 @@ const Dropdown = ({ fromLang, toLang, setFromLang, setToLang }: Props) => {
 
   const handleOutsideClick = (
     event: MouseEvent,
-    ref: React.RefObject<HTMLDivElement>,
+    ref: React.RefObject<HTMLElement>,
   ) => {
     if (!ref.current) return;
 
