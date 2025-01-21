@@ -53,6 +53,23 @@ const Form = ({ translate, fromLang, toLang }: Props) => {
     translationChanged.current = true;
   }, [fromLang, toLang]);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (
+        e.key == "/" &&
+        textAreaRef.current &&
+        document.activeElement !== textAreaRef.current
+      ) {
+        e.preventDefault();
+        textAreaRef.current.focus();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  });
+
   return (
     <form
       onSubmit={handleTranslation}
